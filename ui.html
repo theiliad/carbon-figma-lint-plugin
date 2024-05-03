@@ -1,0 +1,26 @@
+<h1>Carbon Lint 🧹</h1>
+
+<button id="cta">Collect Component Layers</button>
+<ul id="results__list"></ul>
+
+<script>
+  const button = document.getElementById("cta");
+  button.onclick = () => {
+    parent.postMessage({ pluginMessage: { type: "results__collect" } }, "*");
+  };
+
+  window.onmessage = (event) => {
+    const { type, names } = event.data.pluginMessage;
+    if (type === "results__ready") {
+      const list = document.getElementById("results__list");
+      list.innerHTML = "";
+
+      names.forEach((name) => {
+        const item = document.createElement("li");
+        item.textContent = name;
+
+        list.appendChild(item);
+      });
+    }
+  };
+</script>
