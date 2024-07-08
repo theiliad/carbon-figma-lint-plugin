@@ -22,8 +22,8 @@
     "typescript": "4.9.5"
   },
   "scripts": {
-    "build": "build-figma-plugin --typecheck --minify",
-    "watch": "build-figma-plugin --typecheck --watch"
+    "build": "build-figma-plugin --minify",
+    "watch": "build-figma-plugin --watch"
   },
   "figma-plugin": {
     "editorType": [

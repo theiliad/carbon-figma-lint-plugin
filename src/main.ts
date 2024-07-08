@@ -3,7 +3,10 @@ import {
   getParentNode,
   traverseNode,
   getSelectedNodesOrAllNodes,
+  on,
+  emit,
 } from "@create-figma-plugin/utilities";
+import { once, showUI } from "@create-figma-plugin/utilities";
 
 import {
   BLADE_BOX_BACKGROUND_COLOR_VARIABLE_IDS,
@@ -239,12 +242,15 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
           traversedNode.mainComponent?.key
         );
 
-        console.log("traversedNode.type === INSTANCE", traversedNode.type === "INSTANCE", BLADE_COMPONENT_IDS, (BLADE_COMPONENT_IDS.includes(
-          (traversedNode.mainComponent?.parent as ComponentSetNode)?.key ?? ""
-        ) ||
+        console.log(
+          "traversedNode.type === INSTANCE",
+          traversedNode.type === "INSTANCE",
+          BLADE_COMPONENT_IDS,
           BLADE_COMPONENT_IDS.includes(
-            traversedNode.mainComponent?.key ?? ""
-          )))
+            (traversedNode.mainComponent?.parent as ComponentSetNode)?.key ?? ""
+          ) ||
+            BLADE_COMPONENT_IDS.includes(traversedNode.mainComponent?.key ?? "")
+        );
 
         if (
           traversedNode.type === "INSTANCE" &&
@@ -688,66 +694,72 @@ const removeOldGroupNodes = (): void => {
 };
 
 const main = async (): Promise<void> => {
-  try {
-    figma.skipInvisibleInstanceChildren = true;
-    figma.notify("Calculating Coverage", { timeout: Infinity });
+  showUI({
+    height: 600,
+    width: 300,
+  });
 
-    removeOldGroupNodes();
+  on("SCAN_RUN", async () => {
+    figma.notify("Calculating Coverage", { timeout: 5 });
 
-    let nodes: readonly SceneNode[] = [];
-    if (figma.currentPage.selection.length > 0) {
-      // you already have the selection, run the plugin
-      nodes = figma.currentPage.selection;
-    } else if (figma.currentPage.type === "PAGE") {
-      // plugin is run from page scope but has no selection, so traverse all the nodes and then measure coverage
-      nodes = getSelectedNodesOrAllNodes();
-    } else {
-      // the plugin is not run from a page scope, throw error
-      figma.notify(
-        "⚠️ Please run the plugin by opening a Page or selecting a layer inside a Page",
-        {
-          error: true,
-        }
-      );
-      figma.closePlugin();
-    }
+    let coverageMetrics;
 
-    if (nodes.length) {
-      // 1. get the main frame nodes of the current page(ignoring non-frame nodes)
-      const mainFrameNodes = getPageMainFrameNodes(nodes);
-      for await (const mainFrameNode of mainFrameNodes) {
-        // 2. calculate the coverage
-        const coverageMetrics = calculateCoverage(mainFrameNode);
-        if (coverageMetrics) {
-          // 3. render the coverage card. fin.
-          await renderCoverageCard({ mainFrameNode, ...coverageMetrics });
-        }
-      }
-
-      if (nonBladeHighlighterNodes.length) {
-        const nonBladeHighterNodesGroup = figma.group(
-          nonBladeHighlighterNodes,
-          figma.currentPage
+    try {
+      figma.skipInvisibleInstanceChildren = true;
+      removeOldGroupNodes();
+      let nodes: readonly SceneNode[] = [];
+      if (figma.currentPage.selection.length > 0) {
+        // you already have the selection, run the plugin
+        nodes = figma.currentPage.selection;
+      } else if (figma.currentPage.type === "PAGE") {
+        // plugin is run from page scope but has no selection, so traverse all the nodes and then measure coverage
+        nodes = getSelectedNodesOrAllNodes();
+      } else {
+        // the plugin is not run from a page scope, throw error
+        figma.notify(
+          "⚠️ Please run the plugin by opening a Page or selecting a layer inside a Page",
+          {
+            error: true,
+          }
         );
-        nonBladeHighterNodesGroup.name = "Non-Carbon Items";
-        nonBladeHighterNodesGroup.expanded = false;
+        // figma.closePlugin();
       }
-
-      if (bladeCoverageCards.length) {
-        const bladeCoverageCardsGroup = figma.group(
-          bladeCoverageCards,
-          figma.currentPage
-        );
-        bladeCoverageCardsGroup.name = "Carbon Coverage Cards";
-        bladeCoverageCardsGroup.expanded = false;
+      if (nodes.length) {
+        // 1. get the main frame nodes of the current page(ignoring non-frame nodes)
+        const mainFrameNodes = getPageMainFrameNodes(nodes);
+        for await (const mainFrameNode of mainFrameNodes) {
+          // 2. calculate the coverage
+          coverageMetrics = calculateCoverage(mainFrameNode);
+          if (coverageMetrics) {
+            // 3. render the coverage card. fin.
+            await renderCoverageCard({ mainFrameNode, ...coverageMetrics });
+          }
+        }
+        if (nonBladeHighlighterNodes.length) {
+          const nonBladeHighterNodesGroup = figma.group(
+            nonBladeHighlighterNodes,
+            figma.currentPage
+          );
+          nonBladeHighterNodesGroup.name = "Non-Carbon Items";
+          nonBladeHighterNodesGroup.expanded = false;
+        }
+        if (bladeCoverageCards.length) {
+          const bladeCoverageCardsGroup = figma.group(
+            bladeCoverageCards,
+            figma.currentPage
+          );
+          bladeCoverageCardsGroup.name = "Carbon Coverage Cards";
+          bladeCoverageCardsGroup.expanded = false;
+        }
       }
+    } catch (error: unknown) {
+      console.error(error);
+      figma.notify("⚠️ Something went wrong. Please try re-running the plugin");
+    } finally {
+      // figma.closePlugin();
+      emit("SCAN_FINISHED", coverageMetrics);
     }
-  } catch (error: unknown) {
-    console.error(error);
-    figma.notify("⚠️ Something went wrong. Please try re-running the plugin");
-  } finally {
-    figma.closePlugin();
-  }
+  });
 };
 
 export default main;
