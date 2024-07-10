@@ -45,21 +45,21 @@ const nonBladeHighlighterNodes: BaseNode[] = [];
 const bladeCoverageCards: BaseNode[] = [];
 
 const highlightNonBladeNode = (node: SceneNode, desc?: string): void => {
-  const highlighterBox = figma.createRectangle();
-  const nodeType = `${node.type
-    .toUpperCase()
-    .charAt(0)
-    .toUpperCase()}${node.type.toLowerCase().slice(1)}`;
-  highlighterBox.name = `${desc}, Type: ${nodeType}, Name: ${node.name}`;
-  // selection node just gives the x and y relative to the frame we need WRT canvas hence, we need to use absoluteTransform prop
-  highlighterBox.x = node.absoluteTransform[0][2] - 10;
-  highlighterBox.y = node.absoluteTransform[1][2] - 10;
-  highlighterBox.resize(node.width + 22, node.height + 22);
-  highlighterBox.fills = [
-    { type: "SOLID", color: { r: 0, g: 0, b: 0 }, opacity: 0 },
-  ];
-  highlighterBox.strokes = [{ type: "SOLID", color: { r: 0.7, g: 0, b: 0 } }];
-  nonBladeHighlighterNodes.push(highlighterBox);
+  // const highlighterBox = figma.createRectangle();
+  // const nodeType = `${node.type
+  //   .toUpperCase()
+  //   .charAt(0)
+  //   .toUpperCase()}${node.type.toLowerCase().slice(1)}`;
+  // highlighterBox.name = `${desc}, Type: ${nodeType}, Name: ${node.name}`;
+  // // selection node just gives the x and y relative to the frame we need WRT canvas hence, we need to use absoluteTransform prop
+  // highlighterBox.x = node.absoluteTransform[0][2] - 10;
+  // highlighterBox.y = node.absoluteTransform[1][2] - 10;
+  // highlighterBox.resize(node.width + 22, node.height + 22);
+  // highlighterBox.fills = [
+  //   { type: "SOLID", color: { r: 0, g: 0, b: 0 }, opacity: 0 },
+  // ];
+  // highlighterBox.strokes = [{ type: "SOLID", color: { r: 0.7, g: 0, b: 0 } }];
+  // nonBladeHighlighterNodes.push(highlighterBox);
 };
 
 const traverseUpTillMainFrame = (node: BaseNode): BaseNode => {
@@ -258,7 +258,11 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
             });
             if (isOverridden) {
               nonBladeComponents++;
-              nonBladeComponentList.push(getNodeMetadata(traversedNode));
+
+              nonBladeComponentList.push({
+                ...getNodeMetadata(traversedNode),
+                hint: "Overridden Carbon Instance. Please reset changes",
+              });
               highlightNonBladeNode(
                 traversedNode,
                 "Overridden Blade Instance. Please reset changes"
@@ -307,6 +311,10 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
               bladeTextStyles++;
             } else {
               nonBladeTextStyles++;
+              nonBladeComponentList.push({
+                ...getNodeMetadata(traversedNode),
+                hint: "Text is not using Carbon",
+              });
               highlightNonBladeNode(traversedNode, "Text is not using Carbon");
             }
           } else {
@@ -321,6 +329,11 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
               bladeTextStyles++;
             } else {
               nonBladeTextStyles++;
+
+              nonBladeComponentList.push({
+                ...getNodeMetadata(traversedNode),
+                hint: "Text Style is not from Carbon",
+              });
               highlightNonBladeNode(
                 traversedNode,
                 "Text Style is not from Carbon"
@@ -340,9 +353,14 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
               bladeColorStyles++;
             } else {
               nonBladeColorStyles++;
+
+              nonBladeComponentList.push({
+                ...getNodeMetadata(traversedNode),
+                hint: "Text Color Style should only use Carbon tokens",
+              });
               highlightNonBladeNode(
                 traversedNode,
-                "Text Color Style should only use surface/text or feedback/text tokens"
+                "Text Color Style should only use Carbon tokens"
               );
             }
           }
@@ -362,9 +380,14 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
               bladeTextStyles++;
             } else {
               nonBladeTextStyles++;
+
+              nonBladeComponentList.push({
+                ...getNodeMetadata(traversedNode),
+                hint: "Text Color Style should only use Carbon tokens",
+              });
               highlightNonBladeNode(
                 traversedNode,
-                "Text Color Style should only use surface/text or feedback/text tokens"
+                "Text Color Style should only use Carbon tokens"
               );
             }
           }
@@ -374,9 +397,14 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
             Object.keys(traversedNode.boundVariables).length === 0
           ) {
             nonBladeTextStyles++;
+
+            nonBladeComponentList.push({
+              ...getNodeMetadata(traversedNode),
+              hint: "Text Color Style should only use Carbon tokens",
+            });
             highlightNonBladeNode(
               traversedNode,
-              "Text Color Style should only use surface/text or feedback/text tokens"
+              "Text Color Style should only use Carbon tokens"
             );
           }
 
@@ -393,8 +421,11 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
           }
         } else if (traversedNode.type === "LINE") {
           nonBladeComponents++;
-          nonBladeComponentList.push(getNodeMetadata(traversedNode));
 
+          nonBladeComponentList.push({
+            ...getNodeMetadata(traversedNode),
+            hint: "Use a Divider Component Instead",
+          });
           highlightNonBladeNode(
             traversedNode,
             "Use a Divider Component Instead"
@@ -422,6 +453,11 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
             // bladeEffectStyles++;
           } else if (hasEffects && !hasBladeEffectStyles) {
             // nonBladeEffectStyles++;
+
+            nonBladeComponentList.push({
+              ...getNodeMetadata(traversedNode),
+              hint: `Effects not from Carbon's elevation styles`,
+            });
             highlightNonBladeNode(
               traversedNode,
               `Effects not from Carbon's elevation styles`
@@ -445,9 +481,14 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
                 bladeColorStyles++;
               } else {
                 nonBladeColorStyles++;
+
+                nonBladeComponentList.push({
+                  ...getNodeMetadata(traversedNode),
+                  hint: "Box Border color should only use Carbon tokens",
+                });
                 highlightNonBladeNode(
                   traversedNode,
-                  "Box Border color should only use surface/border/* tokens"
+                  "Box Border color should only use Carbon tokens"
                 );
               }
             }
@@ -463,16 +504,25 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
                 bladeColorStyles++;
               } else {
                 nonBladeColorStyles++;
+
+                nonBladeComponentList.push({
+                  ...getNodeMetadata(traversedNode),
+                  hint: "Box Background color should only use Carbon tokens",
+                });
                 highlightNonBladeNode(
                   traversedNode,
-                  "Box Background color should only use surface/background/* tokens"
+                  "Box Background color should only use Carbon tokens"
                 );
               }
             }
           } else if (!isImage) {
+            nonBladeComponentList.push({
+              ...getNodeMetadata(traversedNode),
+              hint: "Box not adhering to Carbon guidelines",
+            });
             highlightNonBladeNode(
               traversedNode,
-              "Box not adhering to Blade guidelines"
+              "Box not adhering to Carbon guidelines"
             );
           }
         }
@@ -513,11 +563,14 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
             // this is non-blade component error
             // push the frame layer to be included in component count
             nonBladeComponents++;
-            nonBladeComponentList.push(getNodeMetadata(traversedNode));
 
+            nonBladeComponentList.push({
+              ...getNodeMetadata(traversedNode),
+              hint: "Use relevant Carbon component",
+            });
             highlightNonBladeNode(
               traversedNode,
-              "Use relevant Blade component"
+              "Use relevant Carbon component"
             );
           } else {
             NODES_SKIP_FROM_COVERAGE.push("FRAME");
@@ -534,6 +587,10 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
           ].includes(traversedNode.type) &&
           getParentNode(traversedNode)?.type !== "PAGE"
         ) {
+          nonBladeComponentList.push({
+            ...getNodeMetadata(traversedNode),
+            hint: "Not created using Carbon Components/Tokens",
+          });
           highlightNonBladeNode(
             traversedNode,
             "Not created using Carbon Components/Tokens"
@@ -661,6 +718,9 @@ const main = async (): Promise<void> => {
     if (node) {
       // Scroll and zoom into the node
       figma.viewport.scrollAndZoomIntoView([node]);
+
+      // Select the node
+      figma.currentPage.selection = [node];
     } else {
       figma.notify("Node not found!");
     }

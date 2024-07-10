@@ -1,4 +1,5 @@
 import {
+  Button,
   StructuredListBody,
   StructuredListCell,
   StructuredListHead,
@@ -6,17 +7,15 @@ import {
   StructuredListRow,
   StructuredListWrapper,
 } from "@carbon/react";
-import {
-  Button,
-  Divider,
-  render,
-  SelectableItem,
-} from "@create-figma-plugin/ui";
+import { Divider, render, SelectableItem } from "@create-figma-plugin/ui";
 import { emit, on } from "@create-figma-plugin/utilities";
 // import { emit } from '@create-figma-plugin/utilities';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Fragment, h } from "preact";
 import { useEffect, useState } from "preact/hooks";
+
+// Styles
+import "!@carbon/styles/css/styles.css";
 
 const Plugin = (): JSX.Element => {
   const [scanRunning, setScanRunning] = useState(false);
@@ -33,6 +32,20 @@ const Plugin = (): JSX.Element => {
 
   return (
     <div>
+      {/* {coverageMetrics && (
+        <div style={{ padding: "15px" }}>
+          <p>
+            Your Carbon coverage is LOW and can be improved. Check your design
+            file for non-Carbon elements and styles, and update to the Carbon
+            library.
+          </p>
+
+          <p style={{ marginTop: "12px" }}>
+            Total components: {coverageMetrics.bladeComponents} Carbon / {coverageMetrics.totalLayers} Non-Carbon
+          </p>
+        </div>
+      )} */}
+
       <div
         style={{
           padding: "15px",
@@ -45,45 +58,52 @@ const Plugin = (): JSX.Element => {
             emit("SCAN_RUN");
           }}
         >
-          Run Scan
+          {coverageMetrics ? "Re-scan for Carbon v11" : "Scan for Carbon v11"}
         </Button>
       </div>
 
-      {/* <StructuredListWrapper selection>
-        <StructuredListHead>
-          <StructuredListRow head>
-            <StructuredListCell head>ColumnA</StructuredListCell>
-            <StructuredListCell head>ColumnB</StructuredListCell>
-            <StructuredListCell head>ColumnC</StructuredListCell>
-          </StructuredListRow>
-        </StructuredListHead>
-        <StructuredListBody>
-          {structuredListBodyRowGenerator(4)}
-        </StructuredListBody>
-      </StructuredListWrapper> */}
-
       {coverageMetrics && (
         <div>
-          <h3
-            style={{
-              marginLeft: "15px",
-              marginBottom: "15px",
-              fontSize: "12px",
-              fontWeight: 700,
-            }}
-          >
-            Non-Carbon components
-          </h3>
-          {coverageMetrics.nonBladeComponentList.map(({ name, id }: any) => (
-            <SelectableItem
-              value={false}
-              onClick={() => {
-                emit("FOCUS", id);
+          <div style={{ padding: "15px" }}>
+            <h4
+              style={{
+                marginTop: "8px",
+                marginBottom: "15px",
               }}
             >
-              {name || id}
-            </SelectableItem>
-          ))}
+              Non-Carbon components
+            </h4>
+          </div>
+
+          <StructuredListWrapper selection>
+            <StructuredListBody>
+              {coverageMetrics.nonBladeComponentList.map(
+                (node: any, i: number) => {
+                  const { id, name, type, hint } = node;
+
+                  return (
+                    <StructuredListRow
+                      key={`row-${i}`}
+                      onClick={() => {
+                        emit("FOCUS", id);
+                      }}
+                      style={{ cursor: "pointer" }}
+                    >
+                      <StructuredListCell
+                        style={{ width: "30%", cursor: "pointer" }}
+                      >
+                        {name}
+                      </StructuredListCell>
+
+                      <StructuredListCell style={{ cursor: "pointer" }}>
+                        {hint}
+                      </StructuredListCell>
+                    </StructuredListRow>
+                  );
+                }
+              )}
+            </StructuredListBody>
+          </StructuredListWrapper>
 
           {/* <SelectableItem value={false}>
             Non-Carbon components: {coverageMetrics.nonBladeComponents}
@@ -97,31 +117,6 @@ const Plugin = (): JSX.Element => {
       )}
     </div>
   );
-};
-
-const structuredListBodyRowGenerator = (numRows: any) => {
-  return Array.apply(null, Array(numRows)).map((n, i) => (
-    <StructuredListRow key={`row-${i}`}>
-      <StructuredListCell>Row {i}</StructuredListCell>
-      <StructuredListCell>Row {i}</StructuredListCell>
-      <StructuredListCell>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc dui magna,
-        finibus id tortor sed, aliquet bibendum augue. Aenean posuere sem vel
-        euismod dignissim. Nulla ut cursus dolor. Pellentesque vulputate nisl a
-        porttitor interdum.
-      </StructuredListCell>
-      <StructuredListInput
-        id={`row-${i}`}
-        value={`row-${i}`}
-        title={`row-${i}`}
-        name="row-0"
-        aria-label={`row-${i}`}
-      />
-      <StructuredListCell>
-        <title>select an option</title>
-      </StructuredListCell>
-    </StructuredListRow>
-  ));
 };
 
 export default render(Plugin);
