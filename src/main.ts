@@ -24,6 +24,7 @@ type CoverageMetrics = {
   bladeColorStyles: number;
   // bladeEffectStyles: number;
   nonBladeComponents: number;
+  nonBladeComponentList: any[];
   nonBladeTextStyles: number;
   nonBladeColorStyles: number;
   // nonBladeEffectStyles: number;
@@ -210,6 +211,7 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
   let bladeColorStyles = 0;
   // let bladeEffectStyles = 0;
   let nonBladeComponents = 0;
+  let nonBladeComponentList = [];
   let nonBladeTextStyles = 0;
   let nonBladeColorStyles = 0;
   // let nonBladeEffectStyles = 0;
@@ -279,6 +281,10 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
                 bladeColorStyles += slotComponentsCoverage?.bladeColorStyles;
                 nonBladeComponents +=
                   slotComponentsCoverage?.nonBladeComponents;
+                nonBladeComponentList = [
+                  ...nonBladeComponentList,
+                  ...slotComponentsCoverage?.nonBladeComponentList,
+                ];
                 nonBladeTextStyles +=
                   slotComponentsCoverage?.nonBladeTextStyles;
                 nonBladeColorStyles +=
@@ -306,6 +312,7 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
             });
             if (isOverridden) {
               nonBladeComponents++;
+              nonBladeComponentList.push(traversedNode);
               highlightNonBladeNode(
                 traversedNode,
                 "Overridden Blade Instance. Please reset changes"
@@ -442,6 +449,8 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
           }
         } else if (traversedNode.type === "LINE") {
           nonBladeComponents++;
+          nonBladeComponentList.push(traversedNode);
+
           highlightNonBladeNode(
             traversedNode,
             "Use a Divider Component Instead"
@@ -560,6 +569,8 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
             // this is non-blade component error
             // push the frame layer to be included in component count
             nonBladeComponents++;
+            nonBladeComponentList.push(traversedNode);
+
             highlightNonBladeNode(
               traversedNode,
               "Use relevant Blade component"
@@ -643,6 +654,7 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
     bladeTextStyles,
     bladeColorStyles,
     nonBladeComponents,
+    nonBladeComponentList,
     nonBladeTextStyles,
     nonBladeColorStyles,
     totalLayers,
@@ -697,6 +709,17 @@ const main = async (): Promise<void> => {
   showUI({
     height: 600,
     width: 300,
+  });
+
+  on("FOCUS", async (nodeId) => {
+    const node = figma.getNodeById(nodeId);
+
+    if (node) {
+      // Scroll and zoom into the node
+      figma.viewport.scrollAndZoomIntoView([node]);
+    } else {
+      figma.notify("Node not found!");
+    }
   });
 
   on("SCAN_RUN", async () => {

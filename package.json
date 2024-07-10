@@ -4,6 +4,7 @@
   "version": "0.0.1",
   "license": "MIT",
   "dependencies": {
+    "@carbon/react": "^1.61.0",
     "@create-figma-plugin/ui": "2.5.0",
     "@create-figma-plugin/utilities": "2.5.0",
     "@floating-ui/react": "0.24.4",
