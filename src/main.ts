@@ -6,7 +6,7 @@ import {
   on,
   emit,
 } from "@create-figma-plugin/utilities";
-import { once, showUI } from "@create-figma-plugin/utilities";
+import { showUI } from "@create-figma-plugin/utilities";
 
 import {
   BLADE_BOX_BACKGROUND_COLOR_VARIABLE_IDS,
@@ -17,6 +17,7 @@ import {
   CARBON_TEXT_TYPEFACE_STYLE_IDS,
   CARBON_EFFECT_STYLE_IDS,
 } from "./bladeLibraryConstants";
+import { getNodeMetadata } from "./utils/getNodeMetadata";
 
 type CoverageMetrics = {
   bladeComponents: number;
@@ -109,18 +110,6 @@ const renderCoverageCard = async ({
   };
 
   try {
-    const coverageCardComponent = await figma.importComponentByKeyAsync(
-      COVERAGE_CARD_COMPONENT_KEY
-    );
-    const coverageCardInstance = coverageCardComponent.createInstance();
-    coverageCardInstance.visible = false;
-    if (mainFrameNode.width < 500) {
-      coverageCardInstance.x = mainFrameNode.x + 20; // for mobile screens the card shouldn't offset a lot
-    } else {
-      coverageCardInstance.x = mainFrameNode.x + 300; // 300 because we want to prevent conflict with the frame name
-    }
-    coverageCardInstance.y = mainFrameNode.y - coverageCardComponent.height;
-
     // // import styles for popsitive, negative and notice colors and set their id in BLADE_INTENT_COLOR_KEYS
     // for await (const [intent, intentObject] of Object.entries(
     //   BLADE_INTENT_COLOR_KEYS
@@ -142,25 +131,6 @@ const renderCoverageCard = async ({
       // coverageColorIntent = BLADE_INTENT_COLOR_KEYS.positive.id;
     }
 
-    console.log("coverageCardComponent", coverageCardComponent);
-
-    // coverageCardInstance.setProperties({
-    //   "bladeCoverageType#45789:0": bladeCoverageType,
-    //   "bladeCoverage#45789:1": `${bladeCoverage.toFixed(2)}%`,
-    //   "totalLayers#45789:2": totalLayers.toString().padStart(2, "0"),
-    //   "bladeComponents#45789:3": bladeComponents.toString().padStart(2, "0"),
-    //   "nonBladeComponents#45789:4": nonBladeComponents
-    //     .toString()
-    //     .padStart(2, "0"),
-    //   "nonBladeTextStyles#45789:5": nonBladeTextStyles
-    //     .toString()
-    //     .padStart(2, "0"),
-    //   "nonBladeColorStyles#45789:6": nonBladeColorStyles
-    //     .toString()
-    //     .padStart(2, "0"),
-    // });
-
-    const detachedCoverageCard = coverageCardInstance.detachInstance();
     // traverseNode(detachedCoverageCard, (traversedNode) => {
     //   if (traversedNode.type === "TEXT") {
     //     if (
@@ -180,8 +150,6 @@ const renderCoverageCard = async ({
     //     traversedNode.fillStyleId = coverageColorIntent;
     //   }
     // });
-    detachedCoverageCard.visible = true;
-    bladeCoverageCards.push(detachedCoverageCard);
 
     console.log("RESULTS", {
       "bladeCoverageType#45789:0": bladeCoverageType,
@@ -233,27 +201,6 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
           return;
         }
 
-        console.log(
-          "traversedNode",
-          node,
-          node.type,
-          traversedNode,
-          traversedNode.type,
-          traversedNode.mainComponent,
-          traversedNode.mainComponent?.name,
-          traversedNode.mainComponent?.key
-        );
-
-        console.log(
-          "traversedNode.type === INSTANCE",
-          traversedNode.type === "INSTANCE",
-          BLADE_COMPONENT_IDS,
-          BLADE_COMPONENT_IDS.includes(
-            (traversedNode.mainComponent?.parent as ComponentSetNode)?.key ?? ""
-          ) ||
-            BLADE_COMPONENT_IDS.includes(traversedNode.mainComponent?.key ?? "")
-        );
-
         if (
           traversedNode.type === "INSTANCE" &&
           (BLADE_COMPONENT_IDS.includes(
@@ -263,7 +210,6 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
               traversedNode.mainComponent?.key ?? ""
             ))
         ) {
-          console.log("has slots");
           // few components that have slots we need to check if the children are valid Blade instances
           if (
             BLADE_COMPONENT_IDS_HAVING_SLOT.includes(
@@ -312,17 +258,15 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
             });
             if (isOverridden) {
               nonBladeComponents++;
-              nonBladeComponentList.push(traversedNode);
+              nonBladeComponentList.push(getNodeMetadata(traversedNode));
               highlightNonBladeNode(
                 traversedNode,
                 "Overridden Blade Instance. Please reset changes"
               );
             } else {
-              console.log("NOT OVERRIDEN 1", traversedNode.name);
               bladeComponents++;
             }
           } else {
-            console.log("NOT OVERRIDEN 2", traversedNode.name);
             bladeComponents++;
           }
           totalLayers++;
@@ -449,7 +393,7 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
           }
         } else if (traversedNode.type === "LINE") {
           nonBladeComponents++;
-          nonBladeComponentList.push(traversedNode);
+          nonBladeComponentList.push(getNodeMetadata(traversedNode));
 
           highlightNonBladeNode(
             traversedNode,
@@ -569,7 +513,7 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
             // this is non-blade component error
             // push the frame layer to be included in component count
             nonBladeComponents++;
-            nonBladeComponentList.push(traversedNode);
+            nonBladeComponentList.push(getNodeMetadata(traversedNode));
 
             highlightNonBladeNode(
               traversedNode,
@@ -707,8 +651,8 @@ const removeOldGroupNodes = (): void => {
 
 const main = async (): Promise<void> => {
   showUI({
-    height: 600,
-    width: 300,
+    height: 700,
+    width: 600,
   });
 
   on("FOCUS", async (nodeId) => {

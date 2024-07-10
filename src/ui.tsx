@@ -74,14 +74,14 @@ const Plugin = (): JSX.Element => {
           >
             Non-Carbon components
           </h3>
-          {coverageMetrics.nonBladeComponentList.map(({ id: nodeId }: any) => (
+          {coverageMetrics.nonBladeComponentList.map(({ name, id }: any) => (
             <SelectableItem
               value={false}
               onClick={() => {
-                emit("FOCUS", nodeId);
+                emit("FOCUS", id);
               }}
             >
-              {nodeId}
+              {name || id}
             </SelectableItem>
           ))}
 
