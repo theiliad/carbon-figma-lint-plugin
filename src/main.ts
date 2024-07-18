@@ -46,22 +46,26 @@ const NODES_SKIP_FROM_COVERAGE = [
 const nonBladeHighlighterNodes: BaseNode[] = [];
 const bladeCoverageCards: BaseNode[] = [];
 
+let highlightNodesInRed = false;
+
 const highlightNonBladeNode = (node: SceneNode, desc?: string): void => {
-  const highlighterBox = figma.createRectangle();
-  const nodeType = `${node.type
-    .toUpperCase()
-    .charAt(0)
-    .toUpperCase()}${node.type.toLowerCase().slice(1)}`;
-  highlighterBox.name = `${desc}, Type: ${nodeType}, Name: ${node.name}`;
-  // selection node just gives the x and y relative to the frame we need WRT canvas hence, we need to use absoluteTransform prop
-  highlighterBox.x = node.absoluteTransform[0][2] - 10;
-  highlighterBox.y = node.absoluteTransform[1][2] - 10;
-  highlighterBox.resize(node.width + 22, node.height + 22);
-  highlighterBox.fills = [
-    { type: "SOLID", color: { r: 0, g: 0, b: 0 }, opacity: 0 },
-  ];
-  highlighterBox.strokes = [{ type: "SOLID", color: { r: 0.7, g: 0, b: 0 } }];
-  nonBladeHighlighterNodes.push(highlighterBox);
+  if (highlightNodesInRed) {
+    const highlighterBox = figma.createRectangle();
+    const nodeType = `${node.type
+      .toUpperCase()
+      .charAt(0)
+      .toUpperCase()}${node.type.toLowerCase().slice(1)}`;
+    highlighterBox.name = `${desc}, Type: ${nodeType}, Name: ${node.name}`;
+    // selection node just gives the x and y relative to the frame we need WRT canvas hence, we need to use absoluteTransform prop
+    highlighterBox.x = node.absoluteTransform[0][2] - 10;
+    highlighterBox.y = node.absoluteTransform[1][2] - 10;
+    highlighterBox.resize(node.width + 22, node.height + 22);
+    highlighterBox.fills = [
+      { type: "SOLID", color: { r: 0, g: 0, b: 0 }, opacity: 0 },
+    ];
+    highlighterBox.strokes = [{ type: "SOLID", color: { r: 0.7, g: 0, b: 0 } }];
+    nonBladeHighlighterNodes.push(highlighterBox);
+  }
 };
 
 const traverseUpTillMainFrame = (node: BaseNode): BaseNode => {
@@ -728,8 +732,13 @@ const main = async (): Promise<void> => {
     }
   });
 
-  on("SCAN_RUN", async () => {
+  on("SCAN_RUN", async (run_configs) => {
     figma.notify("Calculating Coverage", { timeout: 5 });
+
+    // if the user has selected to highlight nodes in red
+    if (run_configs.highlightNodesInRed) {
+      highlightNodesInRed = run_configs.highlightNodesInRed;
+    }
 
     let coverageMetrics = {};
 

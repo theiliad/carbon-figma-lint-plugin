@@ -1,5 +1,6 @@
 import {
   Button,
+  Checkbox,
   StructuredListBody,
   StructuredListCell,
   StructuredListHead,
@@ -20,6 +21,9 @@ import "!@carbon/styles/css/styles.css";
 const Plugin = (): JSX.Element => {
   const [scanRunning, setScanRunning] = useState(false);
   const [coverageMetrics, setCoverageMetrics] = useState(null);
+
+  const [highlightNodesInRed, setHighlightNodesInRed] = useState(false);
+
   useEffect(() => {
     on("SCAN_FINISHED", (data) => {
       setScanRunning(false);
@@ -48,6 +52,8 @@ const Plugin = (): JSX.Element => {
 
       <div
         style={{
+          display: "flex",
+          alignItems: "center",
           padding: "15px",
         }}
       >
@@ -55,11 +61,26 @@ const Plugin = (): JSX.Element => {
           loading={scanRunning}
           onClick={() => {
             setScanRunning(true);
-            emit("SCAN_RUN");
+            emit("SCAN_RUN", {
+              highlightNodesInRed,
+            });
           }}
         >
           {coverageMetrics ? "Re-scan for Carbon v11" : "Scan for Carbon v11"}
         </Button>
+
+        <div style={{ flexGrow: 1 }} />
+
+        <div>
+          <Checkbox
+            labelText="Highlight nodes in red"
+            id="highlight-nodes-in-red"
+            checked={highlightNodesInRed}
+            onChange={(e) => {
+              setHighlightNodesInRed(e.target.checked);
+            }}
+          />
+        </div>
       </div>
 
       {coverageMetrics && (
