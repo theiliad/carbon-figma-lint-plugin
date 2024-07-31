@@ -7,6 +7,8 @@ import {
   StructuredListInput,
   StructuredListRow,
   StructuredListWrapper,
+  Tab,
+  Tabs,
 } from "@carbon/react";
 import { Divider, render, SelectableItem } from "@create-figma-plugin/ui";
 import { emit, on } from "@create-figma-plugin/utilities";
@@ -24,7 +26,36 @@ const Plugin = (): JSX.Element => {
 
   const [highlightNodesInRed, setHighlightNodesInRed] = useState(false);
 
+  // Add state for ignored items and current tab
+  const [ignoredItems, setIgnoredItems] = useState([]);
+  const [currentTab, setCurrentTab] = useState("visible");
+
+  console.log("ignoredItems", ignoredItems);
+
+  const ignoreItem = async (id, type) => {
+    const newIgnoredItems = [...ignoredItems, { id, type }];
+    setIgnoredItems(newIgnoredItems);
+    await figma.clientStorage.setAsync("ignoredItems", newIgnoredItems);
+  };
+
   useEffect(() => {
+    const loadIgnoredItems = async () => {
+      try {
+        const storedItems = await figma.clientStorage.getAsync("ignoredItems");
+        if (storedItems) {
+          console.log("Loaded ignored items:", storedItems);
+          setIgnoredItems(storedItems);
+        } else {
+          console.log("No ignored items found in storage.");
+        }
+      } catch (error) {
+        console.error("Error loading ignored items from storage:", error);
+      }
+    };
+
+    console.log("CHECK IGNORED ITEMS")
+    loadIgnoredItems();
+
     on("SCAN_FINISHED", (data) => {
       setScanRunning(false);
 
@@ -96,10 +127,18 @@ const Plugin = (): JSX.Element => {
             </h4>
           </div>
 
+          <Button onClick={() => setCurrentTab("visible")}>Visible</Button>
+          <Button onClick={() => setCurrentTab("ignored")}>Ignored</Button>
+
           <StructuredListWrapper selection>
             <StructuredListBody>
-              {coverageMetrics.nonBladeComponentList.map(
-                (node: any, i: number) => {
+              {coverageMetrics.nonBladeComponentList
+                .filter((node) =>
+                  currentTab === "visible"
+                    ? !ignoredItems.some((item) => item.id === node.id)
+                    : ignoredItems.some((item) => item.id === node.id)
+                )
+                .map((node: any, i: number) => {
                   const { id, name, type, hint } = node;
 
                   return (
@@ -119,21 +158,24 @@ const Plugin = (): JSX.Element => {
                       <StructuredListCell style={{ cursor: "pointer" }}>
                         {hint}
                       </StructuredListCell>
+
+                      {/* Add Ignore Button */}
+                      <StructuredListCell>
+                        <Button
+                          size="sm"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            ignoreItem(id, type);
+                          }}
+                        >
+                          Ignore
+                        </Button>
+                      </StructuredListCell>
                     </StructuredListRow>
                   );
-                }
-              )}
+                })}
             </StructuredListBody>
           </StructuredListWrapper>
-
-          {/* <SelectableItem value={false}>
-            Non-Carbon components: {coverageMetrics.nonBladeComponents}
-          </SelectableItem>
-          <Divider />
-
-          <SelectableItem value={false}>
-            Non-Carbon text styles: {coverageMetrics.nonBladeTextStyles}
-          </SelectableItem> */}
         </div>
       )}
     </div>
