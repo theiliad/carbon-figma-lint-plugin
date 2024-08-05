@@ -1,13 +1,562 @@
 export const carbonThemeData = {
   components: {
-    Button: {
-      key: "ba1045c0ac936b97b931702251bcdb5af1e185af",
+    "Spacing block": {
+      key: "c8af76db2e297f1ddb80075d8d599b81987ae395",
     },
-    //
-    //
-    //
-    "ActionListItems Group": {
-      key: "1e18a66e07ce9830b6a4e440a9b7c02ae55d069b",
+    Screen: {
+      key: "07d05a28314c1204fd35b6c29d77cf48350bb06b",
+    },
+    "Screen + Grid influencers": {
+      key: "6562807c2df6bada690cca8e0a53598aea17a83a",
+    },
+    "_Aspect ratio content template": {
+      key: "c9bde53b2fe58c8b6ffcd0a7dc55b91524070cba",
+    },
+    "Aspect ratio": {
+      key: "80886c4c45eceec65b0ec7304e59f27dd05da661",
+    },
+    "Slot group": {
+      key: "feed1d070a3cf2daeac1b372b5f04aac0e9b7655",
+    },
+    Cursor: {
+      key: "5bf2b68347be351a2ba43797530fe90fd0aecc5b",
+    },
+    "Gradient (Variable)": {
+      key: "c2f5aa28c4a9f9b158e3855fef79a3c365e970f9",
+    },
+    "Icon shell": {
+      key: "7c48161798c2a4f57b24e5be7701c1f0929355b0",
+    },
+    "Mosaic grid": {
+      key: "c5df44e65e63a4837238110c16f2cbfbab294c92",
+    },
+    "Revert AI button": {
+      key: "ea031523763c3890bc2f9e6f70421488ff4f45b7",
+    },
+    "Skeleton state animation": {
+      key: "5e5cd4469e515b1e80621b50e62314bb4bcb7f6c",
+    },
+    Slot: {
+      key: "81a26b95ac9a533f38c045ee4f6633e2700ec30b",
+    },
+    "Status icon": {
+      key: "d188c59a8707464142e30da177f171f173424553",
+    },
+    "Status shape": {
+      key: "80c3600cf46c3773886da4c61c9db9d050e87b2a",
+    },
+    "_Swipe interaction": {
+      key: "6a6e12e58f4a9313588f47e26e7c84b491d8f8a7",
+    },
+    "Accordion item": {
+      key: "989f3735f65dbb9e1e654a622d2f183e73f75ee8",
+    },
+    "_Accordion header skeleton": {
+      key: "922eda50bcd1ab964c84849de630094e49006e6d",
+    },
+    "_Accordion content skeleton": {
+      key: "1376e50d43372623946322ff481ed6d98370f999",
+    },
+    "_Accordion skeleton item": {
+      key: "434fe8c4c99204d750fba1d1f35055f199f589af",
+    },
+    "AI slug": {
+      key: "427d715001d1dcea237dde1b3f6a4cfeb4c9b1e5",
+    },
+    "AI slug - Inline": {
+      key: "8b3a38834e6d36eb41393c4d6361f7573c09257d",
+    },
+    "AI layer - Background": {
+      key: "2fcfb442c7fabef48404853c61faeae8a010f6c0",
+    },
+    "AI layer - Field": {
+      key: "3a261aa87b4483591f5f10a9346f36343125d88a",
+    },
+    "AI explainability popover": {
+      key: "40d295317f3df798a3aa502d066b5fcb955a205d",
+    },
+    "_Breadcrumb item": {
+      key: "19198786c8f652695a0da3c3a18ece40dcc201ce",
+    },
+    Button: {
+      key: "2dacac2c06225005e4f1f79b509b9b69b609ed42",
+    },
+    Checkbox: {
+      key: "60e6d20b18a14593579981264c6e2104f48ee367",
+    },
+    "Checkbox group": {
+      key: "8f49bdb7fad9011ea76292ccfa62a4bd74b7037f",
+    },
+    "_Code snippet tooltip": {
+      key: "d5029dd68c4b77fa853c925dbfbae5b13f9526d0",
+    },
+    "_Code snippet - Inline item": {
+      key: "1f9a108122c5fc040cbd87aaf78d2f2bbe7d0119",
+    },
+    "_Code snippet ghost button": {
+      key: "113b15bd1de4c38b7a9ef42c67de7189400d0b6b",
+    },
+    "Code snippet - Single line": {
+      key: "6ba1b1b8cc3b1bc4605f814998937c1ed1974762",
+    },
+    "Code snippet - Inline": {
+      key: "7a91e3096e8a0b35cc5dbc015631caedd243c2d0",
+    },
+    "Code snippet - Multi-line": {
+      key: "c5a3365765d6a9b833ecae634055abd785783616",
+    },
+    "Contained list": {
+      key: "cd12af4250d06844a05efe0558c39de344ae2425",
+    },
+    "_List title actions - On page": {
+      key: "53f81e256fa3ac6e7935ec6873a389b75393fa5e",
+    },
+    "_Contained list row cell item": {
+      key: "6a4adf2be6439b30be88b79676e244f00a7eff79",
+    },
+    "_Contained list title item": {
+      key: "37895677b90565c87cc332792fb886d85f11d74f",
+    },
+    "_Contained list row item": {
+      key: "7b330a41088babc646ae0de5e9c0678145a5af9f",
+    },
+    "_Content switcher text item": {
+      key: "e18c4047eed0024c698b4fb138f5227438372830",
+    },
+    "_Content switcher icon item": {
+      key: "b9e6df0ad94a6dc726327a7dffaa9b6a5ef57235",
+    },
+    "Content switcher": {
+      key: "4237ff550dd9dfc3d784c383535b38993d7f55a3",
+    },
+    "_Date picker calendar day item": {
+      key: "b66cd023fb50a89407d9b93607e92c91bdff0d0a",
+    },
+    "_Date picker month pagination": {
+      key: "26e60c6455dfd12aeacab19dd88efc9ad8e760d3",
+    },
+    "_Date picker month year": {
+      key: "3ced9059e481e3b59c768ec953a1d2f2bce2a6af",
+    },
+    "_Time picker item - Fixed": {
+      key: "773ea18968aaa15a08b7c2fbd3770aaa94bb7c4b",
+    },
+    "Time picker items - Fixed": {
+      key: "0c2613233ab7c9359d3ac7b614e69e411a75cf86",
+    },
+    "Time picker items - Clock": {
+      key: "352938a38339facb327b999421bde80167e85b83",
+    },
+    "Time picker items - Timezone": {
+      key: "0b4cea9ce2dd40cd5edfb0e006efb30e77a6b017",
+    },
+    "Date picker - Simple date - Default": {
+      key: "9150a8170fbd6dce5105bee458df7f2b7d24b289",
+    },
+    "Date picker - Simple date - Fluid": {
+      key: "31d7a6cfd5b12ab0e6ce8cbd18c4af2ba5af8ad4",
+    },
+    "Date picker - Single calendar - Default": {
+      key: "ff2aaa90733e3a27e45d5000858b1f8281d3450d",
+    },
+    "Date picker - Single calendar - Fluid": {
+      key: "960621f6dbda6f181525b65fc0bffaa5b2d01912",
+    },
+    "Date picker - Range calendar - Default": {
+      key: "7cee6426e20654c500f0c6916a1d4b42167c94cd",
+    },
+    "Date picker - Range calendar - Fluid": {
+      key: "5f5a3aa660c7dd91011623d92ac4432a69b09fea",
+    },
+    "Time picker - Default": {
+      key: "332dcabd871ffe888af49f47f47b9d1adf953924",
+    },
+    "Time picker - Fluid": {
+      key: "5362757a89792a4e90c9f226c9d6c8e31ebe59d7",
+    },
+    "Data table": {
+      key: "ae27326d640688f9198dd00d1ade0b80eb623844",
+    },
+    "Data table toolbar item": {
+      key: "9530efc3fc9bca380831c8ff8ed85bdeb8ffd59a",
+    },
+    "Data table batch actions bar item": {
+      key: "a5022f2cf3e8848d0d687e8d7572a4f7f1af3534",
+    },
+    "Data table header cell item": {
+      key: "0c91aec4c3de6d1e71c08a32794acba2db65540d",
+    },
+    "Data table row cell item": {
+      key: "ebac99e1a1a0ca9ca95726f08af090407d71852e",
+    },
+    "Data table select cell item": {
+      key: "8823d55d9c746f8fd492a78a8db19e16846d9f9c",
+    },
+    "Data table expand cell item": {
+      key: "83dc272911cfa0f7913fd3e691eff08d96fd2388",
+    },
+    "Data table header row item": {
+      key: "6f525cb77349f82f7b8a820bf2e1d5fe7aae1afc",
+    },
+    "Data table body row item": {
+      key: "0e1d1d737ed8d3a5c1fd823b78d3220801ebdfe4",
+    },
+    "_Data table skeleton item": {
+      key: "ba9571983cb6dece407243e4e751499ebb3de5df",
+    },
+    "Data table batch actions button": {
+      key: "50b81b6fabf39c9f01d007ecffa9be4f6ad93865",
+    },
+    "_Data table body row expanded content base": {
+      key: "6e217fbc8dd0c8a9220bacebaf1b48124c817104",
+    },
+    "_Data table skeleton base": {
+      key: "d50db67237a717792d068e83567751ee37af3463",
+    },
+    "Dropdown - Default": {
+      key: "b199b7a2c8fce5659fa514ecbbf76298d273d7fe",
+    },
+    "Dropdown - Fluid": {
+      key: "b756e9cc8728525278059209cac6f813bcfbf79c",
+    },
+    "Dropdown - Combo box - Default": {
+      key: "f98ff18d6adec2da7fd0e4a8e316e7fc475b7c3c",
+    },
+    "Dropdown - Combo box - Fluid": {
+      key: "bc44853bd6105b39208e600ea3983c83c7347bdf",
+    },
+    "Dropdown - Multi-select - Default": {
+      key: "a330d6919da7a443993425d559360338048f8443",
+    },
+    "Dropdown - Multi-select  - Fluid": {
+      key: "6163a18520949149edc95d4917c401d8fdaf29ce",
+    },
+    "Dropdown - Filterable multi-select - Default": {
+      key: "37a7a4f96a8eaaf6c628594cd6e250da07df8905",
+    },
+    "Dropdown - Filterable multi-select - Fluid": {
+      key: "8d6082f25b83a0306c7f24a051982d3afeed4665",
+    },
+    "_Dropdown chevron": {
+      key: "cc8e85dc2e2c5c282d8940aeeae97af592cb0999",
+    },
+    "_Dropdown menu list - Default": {
+      key: "d1459c3a2726775e820d32c8d293cb387f204b9b",
+    },
+    "_Dropdown list item - Default": {
+      key: "e515106a9c1a3b89dea884bfb03e5fcbd792f4a3",
+    },
+    "_Dropdown parent checkbox - Default": {
+      key: "3efc711b8e0b6bd2cd6fe53bc251c28f19218bd1",
+    },
+    "_Dropdown menu list - Fluid input": {
+      key: "6d86924db0bd1d1603b80883e93e6bfc240d5503",
+    },
+    "_Dropdown list item - Fluid input": {
+      key: "79a5b1d081a5caf15196bb542c840d152530aeea",
+    },
+    "_Dropdown parent checkbox - Fluid": {
+      key: "4a7acfa3426f6583cb32cdd35eb16bb6cb546df3",
+    },
+    "_File uploader - Drag and drop box states": {
+      key: "643425bee881a5913c0b986d743d59a24ce776de",
+    },
+    "_File uploader file item": {
+      key: "6bd3afd69de75d621e0894278f410571cc9ecf45",
+    },
+    "File uploader": {
+      key: "633296eaf2e98828f15418bf1a0cde817361408f",
+    },
+    "Form on page": {
+      key: "3727881fa3abd6c14635dda61a896451f8ab9767",
+    },
+    "Form modal - Default": {
+      key: "87df4ebe2da10d7f763544d3f5e646f0353466e0",
+    },
+    "Form modal - Fluid": {
+      key: "c06b84526f12b3d08bc076bfa2a49676cd752571",
+    },
+    Link: {
+      key: "dd0d66658a97d9f1abb6e841ee867c460622eab7",
+    },
+    "List item": {
+      key: "a6d8dfbf3e67bd17c0825d2a8496402f2a88ea66",
+    },
+    List: {
+      key: "26c85817fb3bd5438a63da54e5e2e24ed136b2d8",
+    },
+    "_Loading base": {
+      key: "adbb37477a953e2f2a7df9f542d214b1f093c0bc",
+    },
+    "_Loading animation": {
+      key: "beab93d5037daea1edbbc98f344ad9755aa8a275",
+    },
+    Loading: {
+      key: "702dd973ed7c47070ef335bef65e818bd03ec80c",
+    },
+    "_Keyboard shortcut": {
+      key: "0faf1e60d19c28914a85a2377ef93f025d9bc5e7",
+    },
+    "_Menu list item": {
+      key: "29607e7d3dd9e4b9be1afc24827a7749db19a7e3",
+    },
+    Menu: {
+      key: "e44d0a629e3c488e144b1741d7ec7884938a0378",
+    },
+    "Menu button": {
+      key: "c52f4dcf206f7131cc466bb0f191d6ccc3088401",
+    },
+    "Combo button": {
+      key: "8f0ec8e7f42b7ade150cb227ab35a6244a03557b",
+    },
+    Overflow: {
+      key: "b621a6f285a9a4bd46075dbf0ef3f891d22174a8",
+    },
+    Modal: {
+      key: "a0955510034c020dcc620041eecb0b3711d1e03d",
+    },
+    "_Modal footer item": {
+      key: "dee5a052e4c5a4675a1695b3fb3f2ae14dc5476d",
+    },
+    "Notification action button item": {
+      key: "2bab42c9bb925ad5eb9d39a62a01bba1461b55c9",
+    },
+    Notification: {
+      key: "782f583f7288e9c28b3e115fc975731f626d1956",
+    },
+    "Number input - Default": {
+      key: "dc914714c20026ea8b089a504dce508db0ad6849",
+    },
+    "Number input - Fluid": {
+      key: "bd4b5beb9ba8107f52259eb19c44f5b766be1c06",
+    },
+    "_Number input action item": {
+      key: "22f14cdedc2d71785bc34aac47e248c30f03d538",
+    },
+    "_AI slug action item": {
+      key: "e30f9ab2222db18a064fe534f9490221e5aafc87",
+    },
+    "_Revert button action item": {
+      key: "7740cf1f2bd16c47ea8f605fbecb0970e2d6c2ea",
+    },
+    "_Number input base": {
+      key: "28c9623848484f5872ee5c490c1b4a571363bc22",
+    },
+    "_Pagination - Nav page item": {
+      key: "9ab9b5064c85ca649c8db0f8a16a846188d14523",
+    },
+    "Pagination - Nav": {
+      key: "74a61188ba6b925806544c393ea49d4885ec7f7b",
+    },
+    "Pagination - Table bar": {
+      key: "f261be69ebb80e78169e6f61492388bd2793c198",
+    },
+    "_Password input base": {
+      key: "3364e28baf4ffbd10b602dc46024442ecd76a552",
+    },
+    "Password input - Default": {
+      key: "2edfceb12bd3ba8d48461fda03d03ca1512ff5ce",
+    },
+    "Password input - Fluid": {
+      key: "f826f72f503edf9bfa0fa41719d3083810120d9a",
+    },
+    "Popover item": {
+      key: "d0b33fc6dca84b6d1db37d7822fde8254fa8cd91",
+    },
+    Popover: {
+      key: "b96fd09653fffc03adade04028fbede21909b273",
+    },
+    "Popover - Tab tip": {
+      key: "0cbcc302ea4ca115ac5203c691b3e021a5e2e319",
+    },
+    "Progress bar": {
+      key: "7331733dca2385cef642aa8d2336e3de08af6a8f",
+    },
+    "_Progress bar animation - Determinate": {
+      key: "30cbf467ec6677671fc531a46b2ec627522c544a",
+    },
+    "_Progress bar animation - Indeterminate": {
+      key: "f52e0d7587f6a0ba4e2997941b8ca19270190377",
+    },
+    "Progress indicator": {
+      key: "27871c8ff88dd182303589765e57053f9e03cedc",
+    },
+    "_Progress indicator skeleton item": {
+      key: "d0013d73a7122a8cbac37f758daa34f8f4d00af8",
+    },
+    "_Progress indicator item": {
+      key: "81d3f50f36a57d47fc171f428c654c477617a33e",
+    },
+    "_Progress indicator step label base": {
+      key: "845efbeda3479b226b9d456e2302f0d0dcad5e29",
+    },
+    "Radio button": {
+      key: "3038c021955f76c38d44f258388533cbc73edfad",
+    },
+    "Radio button group": {
+      key: "5c94678afc08253c85867372b411fc986e3c0c1c",
+    },
+    "Search - Default": {
+      key: "beab1eaf9dad5a997512119efa8a0ae7c3f1e809",
+    },
+    "Search - Fluid": {
+      key: "b43b5f9095e5a2c07969c3eaa4ef068dfe173a21",
+    },
+    "_Select menu default base": {
+      key: "d26d125569b23e69a13a8258faa4d7ddd35f2177",
+    },
+    "_Select menu inline base": {
+      key: "8bb142ac32e221e677246b98b0464fe9ad371ae0",
+    },
+    "_Select menu chrome menu items": {
+      key: "ac4ec2c7f8ec3878aa17760041f766706314c54a",
+    },
+    "Select - Default": {
+      key: "70cfb4e723471ee8df7ef33ba7de2f2eec037337",
+    },
+    "Select - Fluid": {
+      key: "4b5270d3647f31ed571d616c9ec284af2ecf6885",
+    },
+    Slider: {
+      key: "15dc287850b8691a580eb48d4a2d806c9ed082d5",
+    },
+    "_Slider left rail": {
+      key: "8560a17e93be99def4b9a7b1c1947b49eedf7ebd",
+    },
+    "_Slider item": {
+      key: "20a0f3516c43962509273f5955ee5d8c97f57657",
+    },
+    "Slider - Range": {
+      key: "bad30fbb87c67dd4092566663f1e05c6566b1946",
+    },
+    "_Slider - Range handle": {
+      key: "f967be2e011c1c90bce6767093fa51b08c8c7192",
+    },
+    "_Slider - Range slider track": {
+      key: "a5fe5b2d99bd161ba84819c44c882a463c7420f7",
+    },
+    "Structured list": {
+      key: "32eeb2e006a777e1706aa1a87add419107b99d2a",
+    },
+    "Structured list - Selectable": {
+      key: "7fd0df8c4a73722afa07758cb0634e95d6f70964",
+    },
+    "_Structured list header row item": {
+      key: "e61f5f02adfe5d4b055c0811201e20d4065ac454",
+    },
+    "_Structured list row item": {
+      key: "24f8bb1b99eb65385799f8360bd224dd5de17188",
+    },
+    "_Structured list row item - Selectable": {
+      key: "daf1325705c9b00289959c3a4f09210caf57a548",
+    },
+    "_Structured list header cell base": {
+      key: "2feac8c2d27a80dd4a0d26679c332ed167ba7405",
+    },
+    "_Structured list row cell base": {
+      key: "2e9a8a9c8ae009dd3cd81961c112e776f0585ec0",
+    },
+    "_Structured list select cell base": {
+      key: "d6da1d51396fbc8ecaf4bb53dbf2d8b7b446fa96",
+    },
+    Tabs: {
+      key: "9523cba6e769e7a3dff1d963bf76b15b0514785e",
+    },
+    "_Tabs button item": {
+      key: "3154c3e7e5fe383cd47abd622c3c4db453902799",
+    },
+    "_Horizontal tabs items": {
+      key: "2405278c2c8d43d60d618cb8c377498fc71c564c",
+    },
+    "_Vertical tabs items": {
+      key: "ed155548124e0ab6ad375b9a8b6178274d1f1278",
+    },
+    "_Tag close button": {
+      key: "48e5f3b74fb563fe3afa6658a5d2a40326a19499",
+    },
+    "Tag - Read-only": {
+      key: "ad25cf4276c9a8c6c732577ae9b39abd3f5accb0",
+    },
+    "Tag - Selectable": {
+      key: "a169f86ced5802c173f392ca5e0de74e52b0813f",
+    },
+    "Tag - Operational": {
+      key: "fb308f5d325d0c01c67703dc8e10f6fdccbda496",
+    },
+    "Text area - Default": {
+      key: "b1bb1582ea85e6bf9afd9baea9f7c267fbd32c7c",
+    },
+    "Text area - Fluid": {
+      key: "2481442765ae05e16950f317767ec22b268d784d",
+    },
+    "Text input - Default": {
+      key: "666f228a351cd23c8cb8dad0ca4561be94f3f6af",
+    },
+    "Text input - Fluid": {
+      key: "41c6fa1125e2bd6cb2d4b32dd920a20ec321030a",
+    },
+    Tile: {
+      key: "25e9b73e933ede1b74df45ce6e62403b0de7ecc5",
+    },
+    Toggle: {
+      key: "0cc91df64241ad23ec8e39e9f9a8e39c5f5a480c",
+    },
+    "_Toggle switch - Small": {
+      key: "ade41a3d6968b1fc22576ff1286441dad50529a9",
+    },
+    "_Toggle item": {
+      key: "b54e87ad354f5d26ea317a569af01788047d16e6",
+    },
+    "_Toggletip body item": {
+      key: "cd6376da2c79db18f41040a120d0b6695fed548b",
+    },
+    Toggletip: {
+      key: "8e04badd276509aa932c52c12847e441415780e1",
+    },
+    "_Tooltip caret item": {
+      key: "4e2acc4a169672cdcf71a09e077adca1f80b491e",
+    },
+    "_Tooltip definition item": {
+      key: "1b1703d028cb2b48e50514281f2c7e781e521c4d",
+    },
+    "Tooltip body item": {
+      key: "50062e20baa38690e7bb557f25ad768892449d87",
+    },
+    Tooltip: {
+      key: "7f8a42d36ea00761de9bd83e67d490d966e11c4b",
+    },
+    "_Tree view spacer - Branch node": {
+      key: "2deb9fef2ded6a368b223f6b1f1874f7b00cfc51",
+    },
+    "_Tree view spacer - Leaf node": {
+      key: "fa4341164a6a53180a88b031467f7aad47cda738",
+    },
+    "Branch node item": {
+      key: "4fef44729f8ef79e11add4a9eeee5c88b225dc2b",
+    },
+    "Tree view": {
+      key: "34faf9cf627fbbe6c7be9c739237d97db17f00aa",
+    },
+    "UI shell - Header menu item": {
+      key: "a4fc2332a276002ba1dacb1646456f1846c3a4d7",
+    },
+    "UI shell - Header sub-menu item": {
+      key: "cd27cc599ec77aff0e9412cd48f5ba3b1b0cc311",
+    },
+    "UI shell - Header actions": {
+      key: "5c20c9bd3cdf9c895bcccce15fbb3b838add9012",
+    },
+    "UI shell - Header menu": {
+      key: "e70b15550dc7ff7038f50a54cbe2b40d577a7038",
+    },
+    "UI shell - Left panel menu item": {
+      key: "2a5ad059c1bdf6c2660954fef79b714906050853",
+    },
+    "UI shell - Left panel": {
+      key: "1d6784d736321cfbbfc326d32232c07e8e8af7e7",
+    },
+    "UI shell - Right panel item": {
+      key: "74542f7305106f97165604c0ae1b6c199caa6e6a",
     },
   },
   colorStyles: {

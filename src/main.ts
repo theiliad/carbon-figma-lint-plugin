@@ -207,6 +207,18 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
           return;
         }
 
+        if (traversedNode.type === "INSTANCE") {
+          console.log(
+            "INSTANCE 321",
+            traversedNode.name,
+            (traversedNode.mainComponent?.parent as ComponentSetNode)?.key,
+            BLADE_COMPONENT_IDS.includes(
+              (traversedNode.mainComponent?.parent as ComponentSetNode)?.key ??
+                ""
+            )
+          );
+        }
+
         if (
           traversedNode.type === "INSTANCE" &&
           (BLADE_COMPONENT_IDS.includes(
@@ -280,12 +292,19 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
             bladeComponents++;
           }
           totalLayers++;
-        }
-        // else if (traversedNode.type === 'INSTANCE') {
-        //   nonBladeComponents++;
-        //   highlightNonBladeNode(traversedNode, 'Instance is not a Blade Instance');
-        // }
-        else if (traversedNode.type === "TEXT") {
+        } else if (traversedNode.type === "INSTANCE") {
+          nonBladeComponents++;
+
+          nonBladeComponentList.push({
+            ...getNodeMetadata(traversedNode),
+            hint: "Instance is not a Carbon Instance",
+          });
+
+          highlightNonBladeNode(
+            traversedNode,
+            "Instance is not a Carbon Instance"
+          );
+        } else if (traversedNode.type === "TEXT") {
           // check if the text is using Blade's text styles
           let isMixedTextStyleOfBlade = false;
           let traversedNodeTextStyleId = "";
@@ -360,7 +379,11 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
             } else {
               nonBladeColorStyles++;
 
-              console.log("text color 1", traversedNodeColorVariableId, getNodeMetadata(traversedNode));
+              console.log(
+                "text color 1",
+                traversedNodeColorVariableId,
+                getNodeMetadata(traversedNode)
+              );
 
               nonBladeComponentList.push({
                 ...getNodeMetadata(traversedNode),
