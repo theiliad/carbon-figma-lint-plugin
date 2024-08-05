@@ -328,8 +328,8 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
               traversedNode?.textStyleId?.split(",")[0];
 
             if (
-              CARBON_TEXT_TYPEFACE_STYLE_IDS.includes(
-                traversedNodeTextStyleId ?? ""
+              CARBON_TEXT_TYPEFACE_STYLE_IDS.find((styleId) =>
+                styleId.includes(traversedNodeTextStyleId)
               )
             ) {
               bladeTextStyles++;
@@ -359,6 +359,8 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
               bladeColorStyles++;
             } else {
               nonBladeColorStyles++;
+
+              console.log("text color 1", traversedNodeColorVariableId, getNodeMetadata(traversedNode));
 
               nonBladeComponentList.push({
                 ...getNodeMetadata(traversedNode),
