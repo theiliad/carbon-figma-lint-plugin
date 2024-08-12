@@ -207,18 +207,6 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
           return;
         }
 
-        if (traversedNode.type === "INSTANCE") {
-          console.log(
-            "INSTANCE 321",
-            traversedNode.name,
-            (traversedNode.mainComponent?.parent as ComponentSetNode)?.key,
-            BLADE_COMPONENT_IDS.includes(
-              (traversedNode.mainComponent?.parent as ComponentSetNode)?.key ??
-                ""
-            )
-          );
-        }
-
         if (
           traversedNode.type === "INSTANCE" &&
           (BLADE_COMPONENT_IDS.includes(
@@ -370,6 +358,7 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
           if (traversedNode.boundVariables?.fills?.length) {
             traversedNodeColorVariableId =
               traversedNode.boundVariables.fills[0].id.split("/")[0];
+
             if (
               BLADE_TEXT_COLOR_STYLE_IDS.includes(
                 traversedNodeColorVariableId ?? ""
