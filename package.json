@@ -1,5 +1,5 @@
 {
-  "name": "carbon-figma-coverage-plugin",
+  "name": "carbon-v11-figma-coverage-plugin",
   "private": "true",
   "version": "0.0.1",
   "license": "MIT",
@@ -21,10 +21,11 @@
     "@figma/plugin-typings": "1.94.0",
     "@types/node": "20.4.1",
     "@types/react": "18.2.0",
+    "rollup-plugin-postcss": "^4.0.2",
     "typescript": "4.9.5"
   },
   "scripts": {
-    "build": "build-figma-plugin --minify",
+    "build": "FIGMA_PLUGIN_ID=carbon-v11-coverage-plugin build-figma-plugin --minify",
     "watch": "build-figma-plugin --watch"
   },
   "figma-plugin": {

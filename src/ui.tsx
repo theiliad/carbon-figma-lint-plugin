@@ -22,6 +22,7 @@ import {
 
 // Styles
 import "!@carbon/styles/css/styles.css";
+import "!./styles.css";
 
 const Plugin = (): JSX.Element => {
   const [scanRunning, setScanRunning] = useState(false);
