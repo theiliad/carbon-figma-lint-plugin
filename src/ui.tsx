@@ -3,24 +3,25 @@ import {
   Checkbox,
   StructuredListBody,
   StructuredListCell,
-  StructuredListHead,
-  StructuredListInput,
   StructuredListRow,
   StructuredListWrapper,
   Tab,
   TabList,
   Tabs,
 } from "@carbon/react";
-import { Divider, render, SelectableItem } from "@create-figma-plugin/ui";
+import { render } from "@create-figma-plugin/ui";
 import { emit, on } from "@create-figma-plugin/utilities";
-// import { emit } from '@create-figma-plugin/utilities';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { Fragment, h } from "preact";
+import { h } from "preact";
 import { useEffect, useState } from "preact/hooks";
+import { View, ViewOff } from "@carbon/icons-react";
+import {
+  ClientStorageEventTypes,
+  IgnoredItem,
+  nonCarbonErrorMessages,
+} from "./types";
 
 // Styles
 import "!@carbon/styles/css/styles.css";
-import { View, ViewOff } from "@carbon/icons-react";
 
 const Plugin = (): JSX.Element => {
   const [scanRunning, setScanRunning] = useState(false);
@@ -29,58 +30,85 @@ const Plugin = (): JSX.Element => {
   const [highlightNodesInRed, setHighlightNodesInRed] = useState(false);
 
   // Add state for ignored items and current tab
-  const [ignoredItems, setIgnoredItems] = useState([]);
+  const [ignoredItems, setIgnoredItems] = useState<IgnoredItem[]>([]);
   const [currentTab, setCurrentTab] = useState("visible");
 
-  console.log("ignoredItems", ignoredItems);
-
-  const ignoreItem = async (id, type) => {
-    const newIgnoredItems = [...ignoredItems, { id, type }];
-    setIgnoredItems(newIgnoredItems);
-    await figma.clientStorage.setAsync("ignoredItems", newIgnoredItems);
-  };
-
-  const unignoreItem = async (id) => {
-    const newIgnoredItems = ignoredItems.filter((item) => item.id !== id);
-    setIgnoredItems(newIgnoredItems);
-    await figma.clientStorage.setAsync("ignoredItems", newIgnoredItems);
-  };
-
   useEffect(() => {
-    const loadIgnoredItems = async () => {
-      try {
-        const storedItems = await figma.clientStorage.getAsync("ignoredItems");
-        if (storedItems) {
-          console.log("Loaded ignored items:", storedItems);
-          setIgnoredItems(storedItems);
-        } else {
-          console.log("No ignored items found in storage.");
-        }
-      } catch (error) {
-        console.error("Error loading ignored items from storage:", error);
-      }
-    };
-
-    console.log("CHECK IGNORED ITEMS");
-    loadIgnoredItems();
-
+    /*
+     * Scan job
+     */
+    // Triggers once a scan job is done
     on("SCAN_FINISHED", (data) => {
       setScanRunning(false);
 
-      console.log("SCAN_FINISHED", data);
-
       setCoverageMetrics(data);
     });
 
-    on("NEW_RESULTS", (data) => {
-      console.log("NEW RESULTS", data);
+    // /*
+    //  * Figma client storage
+    //  */
+    // // Handle incoming messages
+    // const handleLoadOrUpdate = (newItems: IgnoredItem[]) => {
+    //   console.log("came in", newItems);
+    //   setIgnoredItems(newItems);
+    // };
 
-      setCoverageMetrics(data);
-    });
+    // on(ClientStorageEventTypes.LoadIgnoredItems, handleLoadOrUpdate);
+    // on(ClientStorageEventTypes.UpdateIgnoredItems, handleLoadOrUpdate);
+
+    // // Request the ignoredIDs from main.tsx
+    // emit(ClientStorageEventTypes.LoadIgnoredItems);
+
+    // // Cleanup event listeners on unmount
+    // return () => {
+    //   on(ClientStorageEventTypes.LoadIgnoredItems, handleLoadOrUpdate);
+    //   on(ClientStorageEventTypes.UpdateIgnoredItems, handleLoadOrUpdate);
+    // };
   }, []);
+
+  // const addIgnoredItem = (item: IgnoredItem) => {
+  //   setIgnoredItems([...ignoredItems, item]);
+  //   emit(ClientStorageEventTypes.AddIgnoredItems, item);
+  // };
+
+  // const removeIgnoredItem = (item: IgnoredItem) => {
+  //   setIgnoredItems(
+  //     ignoredItems.filter((d) => d.id !== item.id && d.code !== item.code)
+  //   );
+  //   emit(ClientStorageEventTypes.RemoveIgnoredItems, item);
+  // };
+
+  console.log("ignoredItems", ignoredItems);
 
   return (
     <div>
+      <div
+        style={{
+          padding: "15px 15px 0px 15px",
+        }}
+      >
+        <p
+          style={{
+            fontSize: "12px",
+            color: "#525252",
+          }}
+        >
+          Version 0.1
+        </p>
+
+        <h4>Carbon v11 coverage</h4>
+
+        <p
+          style={{
+            marginTop: "16px",
+            fontSize: "14px",
+          }}
+        >
+          Check this Figma page or selection for Carbon v11 library usage across
+          components, color and type tokens.
+        </p>
+      </div>
+
       <div
         style={{
           display: "flex",
@@ -98,11 +126,9 @@ const Plugin = (): JSX.Element => {
             });
           }}
         >
-          {coverageMetrics ? "Re-scan for Carbon v11" : "Scan for Carbon v11"}
+          {coverageMetrics ? "Re-scan" : "Scan for Carbon"}
         </Button>
-
         <div style={{ flexGrow: 1 }} />
-
         <div>
           <Checkbox
             labelText="Highlight nodes in red"
@@ -114,12 +140,11 @@ const Plugin = (): JSX.Element => {
           />
         </div>
       </div>
-
       {coverageMetrics && (
         <div>
           <div style={{ paddingTop: "15px" }} />
 
-          <Tabs
+          {/* <Tabs
             onChange={({ selectedIndex }) => {
               setCurrentTab(selectedIndex === 0 ? "visible" : "hidden");
             }}
@@ -128,18 +153,22 @@ const Plugin = (): JSX.Element => {
               <Tab value="visible">Visible</Tab>
               <Tab value="hidden">Hidden</Tab>
             </TabList>
-          </Tabs>
+          </Tabs> */}
 
           <StructuredListWrapper selection>
             <StructuredListBody>
               {coverageMetrics.nonBladeComponentList
-                .filter((node) =>
-                  currentTab === "visible"
-                    ? !ignoredItems.some((item) => item.id === node.id)
-                    : ignoredItems.some((item) => item.id === node.id)
-                )
+                // .filter((node) =>
+                //   currentTab === "visible"
+                //     ? !ignoredItems.find(
+                //         (d) => d.id === node.id && d.code === node.code
+                //       )
+                //     : ignoredItems.find(
+                //         (d) => d.id === node.id && d.code === node.code
+                //       )
+                // )
                 .map((node: any, i: number) => {
-                  const { id, name, type, hint } = node;
+                  const { id, name, code } = node;
 
                   return (
                     <StructuredListRow
@@ -156,11 +185,11 @@ const Plugin = (): JSX.Element => {
                       </StructuredListCell>
 
                       <StructuredListCell style={{ cursor: "pointer" }}>
-                        {hint}
+                        {nonCarbonErrorMessages[code]}
                       </StructuredListCell>
 
                       {/* Add Ignore Button */}
-                      <StructuredListCell
+                      {/* <StructuredListCell
                         style={{
                           verticalAlign: "top",
                           paddingTop: "0px",
@@ -173,9 +202,16 @@ const Plugin = (): JSX.Element => {
                             e.stopPropagation();
 
                             if (currentTab === "visible") {
-                              ignoreItem(id, type);
+                              console.log("ewgweg", node);
+                              addIgnoredItem({
+                                id: node.id,
+                                code: node.code,
+                              });
                             } else {
-                              unignoreItem(id);
+                              removeIgnoredItem({
+                                id: node.id,
+                                code: node.code,
+                              });
                             }
                           }}
                           hasIconOnly
@@ -186,7 +222,7 @@ const Plugin = (): JSX.Element => {
                         >
                           {currentTab === "visible" ? <ViewOff /> : <View />}
                         </Button>
-                      </StructuredListCell>
+                      </StructuredListCell> */}
                     </StructuredListRow>
                   );
                 })}

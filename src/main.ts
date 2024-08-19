@@ -20,20 +20,58 @@ import {
 } from "./bladeLibraryConstants";
 import { getNodeMetadata } from "./utils/getNodeMetadata";
 import { mergeObjects } from "./utils/mergeObjects";
+import {
+  ClientStorageEventTypes,
+  CoverageMetrics,
+  IgnoredItem,
+  nonCarbonErrorMessages,
+  nonCarbonErrorTypes,
+} from "./types";
 
-type CoverageMetrics = {
-  bladeComponents: number;
-  bladeTextStyles: number;
-  bladeColorStyles: number;
-  // bladeEffectStyles: number;
-  nonBladeComponents: number;
-  nonBladeComponentList: any[];
-  nonBladeTextStyles: number;
-  nonBladeColorStyles: number;
-  // nonBladeEffectStyles: number;
-  totalLayers: number;
-  bladeCoverage: number;
-};
+let ignoredItems: IgnoredItem[] = [];
+
+// Load ignoredItems from clientStorage on startup
+async function loadIgnoredItems() {
+  const storedItems = await figma.clientStorage.getAsync(
+    "clientStorage__ignoredItems"
+  );
+
+  if (storedItems) {
+    ignoredItems = storedItems;
+  } else {
+    ignoredItems = []; // Ensure ignoredItems is initialized
+  }
+
+  emit(ClientStorageEventTypes.LoadIgnoredItems, ignoredItems);
+}
+
+// Save ignoredItems to clientStorage
+async function saveIgnoredItems() {
+  await figma.clientStorage.setAsync(
+    "clientStorage__ignoredItems",
+    ignoredItems
+  );
+}
+
+// Handle events from ui.tsx
+on(ClientStorageEventTypes.AddIgnoredItems, async (item: IgnoredItem) => {
+  ignoredItems.push(item);
+
+  await saveIgnoredItems();
+  emit(ClientStorageEventTypes.UpdateIgnoredItems, ignoredItems);
+});
+
+on(ClientStorageEventTypes.RemoveIgnoredItems, async (item: IgnoredItem) => {
+  ignoredItems = ignoredItems.filter(
+    (d) => !(d.id === item.id && d.code === item.code)
+  );
+
+  await saveIgnoredItems();
+  emit(ClientStorageEventTypes.UpdateIgnoredItems, ignoredItems);
+});
+
+// Load ignoredIDs on plugin startup
+loadIgnoredItems();
 
 const MAIN_FRAME_NODES = ["FRAME", "SECTION"];
 const NODES_SKIP_FROM_COVERAGE = [
@@ -84,99 +122,6 @@ const traverseUpTillMainFrame = (node: BaseNode): BaseNode => {
   }
 
   return node;
-};
-
-const renderCoverageCard = async ({
-  mainFrameNode,
-  bladeComponents,
-  nonBladeComponents,
-  nonBladeColorStyles,
-  nonBladeTextStyles,
-  totalLayers,
-  bladeCoverage,
-}: {
-  mainFrameNode: SceneNode;
-} & CoverageMetrics): Promise<void> => {
-  // these are from payment light theme but it should work as far as the plugin is being run from Razorpay org
-  const COVERAGE_CARD_COMPONENT_KEY =
-    "25912bd4b8a51bab5ea726259cfc0619d6dae0d5";
-  const BLADE_INTENT_COLOR_KEYS = {
-    positive: {
-      id: "",
-      key: "c61aca5db3a21aead10da4889ad2b31c74d93529",
-    },
-    negative: {
-      id: "",
-      key: "cccac5aac53e828b3be3e8617e462f8ee1a058dd",
-    },
-    notice: {
-      id: "",
-      key: "707d5fdfc748a5fc4777d212ee247bc40a86fe85",
-    },
-  };
-
-  try {
-    // // import styles for popsitive, negative and notice colors and set their id in BLADE_INTENT_COLOR_KEYS
-    // for await (const [intent, intentObject] of Object.entries(
-    //   BLADE_INTENT_COLOR_KEYS
-    // )) {
-    //   const colorStyle = await figma.importStyleByKeyAsync(intentObject.key);
-    //   BLADE_INTENT_COLOR_KEYS[intent as "positive" | "negative" | "notice"].id =
-    //     colorStyle.id;
-    // }
-
-    // let coverageColorIntent = BLADE_INTENT_COLOR_KEYS.negative.id;
-    let bladeCoverageType = "Below 90% 😪";
-    const PROGRESS_BAR_MAX_WIDTH = 254;
-    const bladeCoverageProgress =
-      (bladeCoverage / 100) * PROGRESS_BAR_MAX_WIDTH;
-
-    // calculate coverage type and intent colors for coverage
-    if (bladeCoverage > 90) {
-      bladeCoverageType = `Good 🎉`;
-      // coverageColorIntent = BLADE_INTENT_COLOR_KEYS.positive.id;
-    }
-
-    // traverseNode(detachedCoverageCard, (traversedNode) => {
-    //   if (traversedNode.type === "TEXT") {
-    //     if (
-    //       ["bladeCoverageType", "bladeCoverage"].includes(traversedNode.name)
-    //     ) {
-    //       traversedNode.setRangeFillStyleId(
-    //         0,
-    //         traversedNode.characters.length,
-    //         coverageColorIntent
-    //       );
-    //     }
-    //   } else if (
-    //     traversedNode.type === "RECTANGLE" &&
-    //     traversedNode.name === "Progress"
-    //   ) {
-    //     traversedNode.resizeWithoutConstraints(bladeCoverageProgress || 0.1, 4);
-    //     traversedNode.fillStyleId = coverageColorIntent;
-    //   }
-    // });
-
-    console.log("RESULTS", {
-      "bladeCoverageType#45789:0": bladeCoverageType,
-      "bladeCoverage#45789:1": `${bladeCoverage.toFixed(2)}%`,
-      "totalLayers#45789:2": totalLayers.toString().padStart(2, "0"),
-      "bladeComponents#45789:3": bladeComponents.toString().padStart(2, "0"),
-      "nonBladeComponents#45789:4": nonBladeComponents
-        .toString()
-        .padStart(2, "0"),
-      "nonBladeTextStyles#45789:5": nonBladeTextStyles
-        .toString()
-        .padStart(2, "0"),
-      "nonBladeColorStyles#45789:6": nonBladeColorStyles
-        .toString()
-        .padStart(2, "0"),
-    });
-  } catch (error: unknown) {
-    figma.notify("⚠️ Error in rendering coverage card 124. Please try again");
-    console.error(error);
-    figma.closePlugin();
-  }
 };
 
 const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
@@ -268,11 +213,11 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
 
               nonBladeComponentList.push({
                 ...getNodeMetadata(traversedNode),
-                hint: "Overridden Carbon Instance. Please reset changes",
+                code: nonCarbonErrorTypes.OverriddenCarbonInstance,
               });
               highlightNonBladeNode(
                 traversedNode,
-                "Overridden Blade Instance. Please reset changes"
+                nonCarbonErrorMessages.OverriddenCarbonInstance
               );
             } else {
               bladeComponents++;
@@ -286,12 +231,12 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
 
           nonBladeComponentList.push({
             ...getNodeMetadata(traversedNode),
-            hint: "Instance is not a Carbon Instance",
+            code: nonCarbonErrorTypes.NotCarbonInstance,
           });
 
           highlightNonBladeNode(
             traversedNode,
-            "Instance is not a Carbon Instance"
+            nonCarbonErrorMessages.NotCarbonInstance
           );
         } else if (traversedNode.type === "TEXT") {
           // check if the text is using Blade's text styles
@@ -327,9 +272,12 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
               nonBladeTextStyles++;
               nonBladeComponentList.push({
                 ...getNodeMetadata(traversedNode),
-                hint: "Text is not using Carbon",
+                code: nonCarbonErrorTypes.NotCarbonText,
               });
-              highlightNonBladeNode(traversedNode, "Text is not using Carbon");
+              highlightNonBladeNode(
+                traversedNode,
+                nonCarbonErrorMessages.NotCarbonText
+              );
             }
           } else {
             traversedNodeTextStyleId =
@@ -346,11 +294,11 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
 
               nonBladeComponentList.push({
                 ...getNodeMetadata(traversedNode),
-                hint: "Text Style is not from Carbon",
+                code: nonCarbonErrorTypes.NotCarbonTextStyle,
               });
               highlightNonBladeNode(
                 traversedNode,
-                "Text Style is not from Carbon"
+                nonCarbonErrorMessages.NotCarbonTextStyle
               );
             }
           }
@@ -369,19 +317,13 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
             } else {
               nonBladeColorStyles++;
 
-              console.log(
-                "text color 1",
-                traversedNodeColorVariableId,
-                getNodeMetadata(traversedNode)
-              );
-
               nonBladeComponentList.push({
                 ...getNodeMetadata(traversedNode),
-                hint: "Text Color Style should only use Carbon tokens",
+                code: nonCarbonErrorTypes.NotCarbonTextColor,
               });
               highlightNonBladeNode(
                 traversedNode,
-                "Text Color Style should only use Carbon tokens"
+                nonCarbonErrorMessages.NotCarbonTextColor
               );
             }
           }
@@ -404,11 +346,11 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
 
               nonBladeComponentList.push({
                 ...getNodeMetadata(traversedNode),
-                hint: "Text Color Style should only use Carbon tokens",
+                code: nonCarbonErrorTypes.NotCarbonTextRangeColor,
               });
               highlightNonBladeNode(
                 traversedNode,
-                "Text Color Style should only use Carbon tokens"
+                nonCarbonErrorMessages.NotCarbonTextRangeColor
               );
             }
           }
@@ -421,11 +363,11 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
 
             nonBladeComponentList.push({
               ...getNodeMetadata(traversedNode),
-              hint: "Text Color Style should only use Carbon tokens",
+              code: nonCarbonErrorTypes.NotCarbonTextStyle,
             });
             highlightNonBladeNode(
               traversedNode,
-              "Text Color Style should only use Carbon tokens"
+              nonCarbonErrorMessages.NotCarbonTextStyle
             );
           }
 
@@ -445,11 +387,11 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
 
           nonBladeComponentList.push({
             ...getNodeMetadata(traversedNode),
-            hint: "Use a Divider Component Instead",
+            code: nonCarbonErrorTypes.NotCarbonDivider,
           });
           highlightNonBladeNode(
             traversedNode,
-            "Use a Divider Component Instead"
+            nonCarbonErrorMessages.NotCarbonDivider
           );
         } else if (traversedNode.type === "RECTANGLE") {
           let isImage = false;
@@ -466,7 +408,6 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
           }
 
           // const hasEffects = traversedNode.effects?.length;
-          // console.log("hasEffects", traversedNode, hasEffects);
           // const hasBladeEffectStyles = CARBON_EFFECT_STYLE_IDS.includes(
           //   traversedNode.effectStyleId
           // );
@@ -506,11 +447,11 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
 
                 nonBladeComponentList.push({
                   ...getNodeMetadata(traversedNode),
-                  hint: "Box Border color should only use Carbon tokens",
+                  code: nonCarbonErrorTypes.NotCarbonBoxBorderColor,
                 });
                 highlightNonBladeNode(
                   traversedNode,
-                  "Box Border color should only use Carbon tokens"
+                  nonCarbonErrorMessages.NotCarbonBoxBorderColor
                 );
               }
             }
@@ -529,22 +470,22 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
 
                 nonBladeComponentList.push({
                   ...getNodeMetadata(traversedNode),
-                  hint: "Box Background color should only use Carbon tokens",
+                  code: nonCarbonErrorTypes.NotCarbonBoxBackgroundColor,
                 });
                 highlightNonBladeNode(
                   traversedNode,
-                  "Box Background color should only use Carbon tokens"
+                  nonCarbonErrorMessages.NotCarbonBoxBackgroundColor
                 );
               }
             }
           } else if (!isImage) {
             nonBladeComponentList.push({
               ...getNodeMetadata(traversedNode),
-              hint: "Box not adhering to Carbon guidelines",
+              code: nonCarbonErrorTypes.NotCarbonBox,
             });
             highlightNonBladeNode(
               traversedNode,
-              "Box not adhering to Carbon guidelines"
+              nonCarbonErrorMessages.NotCarbonBox
             );
           }
         }
@@ -588,11 +529,11 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
 
             nonBladeComponentList.push({
               ...getNodeMetadata(traversedNode),
-              hint: "Use relevant Carbon component",
+              code: nonCarbonErrorTypes.NotCarbonComponent,
             });
             highlightNonBladeNode(
               traversedNode,
-              "Use relevant Carbon component"
+              nonCarbonErrorMessages.NotCarbonComponent
             );
           } else {
             NODES_SKIP_FROM_COVERAGE.push("FRAME");
@@ -611,11 +552,11 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
         ) {
           nonBladeComponentList.push({
             ...getNodeMetadata(traversedNode),
-            hint: "Not created using Carbon Components/Tokens",
+            code: nonCarbonErrorTypes.NotCreatedUsingCarbonComponentsOrTokens,
           });
           highlightNonBladeNode(
             traversedNode,
-            "Not created using Carbon Components/Tokens"
+            nonCarbonErrorMessages.NotCreatedUsingCarbonComponentsOrTokens
           );
         }
 
@@ -731,11 +672,7 @@ const removeOldGroupNodes = (): void => {
 const main = async (): Promise<void> => {
   showUI({
     height: 700,
-    width: 600,
-  });
-
-  on("STORAGE_GET", async (key) => {
-    return figma.clientStorage.getAsync("key");
+    width: 450,
   });
 
   on("FOCUS", async (nodeId) => {
@@ -790,10 +727,6 @@ const main = async (): Promise<void> => {
             coverageMetrics,
             _metrics as AnyObject
           );
-          if (_metrics) {
-            // 3. render the coverage card. fin.
-            await renderCoverageCard({ mainFrameNode, ..._metrics });
-          }
         }
         if (nonBladeHighlighterNodes.length) {
           const nonBladeHighterNodesGroup = figma.group(
