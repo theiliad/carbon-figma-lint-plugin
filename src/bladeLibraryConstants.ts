@@ -1737,12 +1737,7 @@ export const carbonThemeData = {
     "Variable/Link/Fluid styles/fluid-quotation-02":
       "S:6d66b7b00229035e65f0cfdfe4b6bda0e9a3f20c,",
   },
-  effectStyles: {
-    "Elevation/lowRaised": "S:0e93e8cb4c180708ece288bc717fd354aaf01e4d",
-    "Elevation/midRaised": "S:a4c06c124f87ec273f7976cac87bc563cf2f86bf",
-    "Elevation/highRaised": "S:83e8795c0548afa8e1e99ecdcaffa261a112a57d",
-    // 'Eleation/_bottomSheet': 'S:43bf80562d506bf0541a1237233edd455bbebb7a', // private style
-  },
+  effectStyles: {},
 };
 
 export const BLADE_COMPONENT_IDS = Object.values(
@@ -1750,28 +1745,28 @@ export const BLADE_COMPONENT_IDS = Object.values(
 ).map((component) => component.key);
 
 // Carousel, Modal, Bottom Sheet, Card, Dropdown Menu
-export const BLADE_COMPONENT_IDS_HAVING_SLOT = [
-  // carbonThemeData.components["Accordion Group"],
-  // carbonThemeData.components["Accordion Item"],
-  // carbonThemeData.components["AccordionBody-Base"],
-  // carbonThemeData.components["Bottom Sheet"],
-  // carbonThemeData.components["BottomSheet/Footer"],
-  // carbonThemeData.components["Dropdown/Header"],
-  // carbonThemeData.components["Base - General Header"],
-  // carbonThemeData.components["Dropdown Menu"],
-  // carbonThemeData.components["Dropdown/Footer"],
-  // carbonThemeData.components.Card,
-  // carbonThemeData.components.Carousel,
-  // carbonThemeData.components.Modal,
-  // carbonThemeData.components["Modal/Footer"],
-  // carbonThemeData.components.Popover,
-  // carbonThemeData.components["Spotlight Popover"],
-  // carbonThemeData.components.Collapsible,
-  // carbonThemeData.components.Table,
-  // carbonThemeData.components.Drawer,
-]
-  .map((component) => component.key)
-  .flat();
+// export const BLADE_COMPONENT_IDS_HAVING_SLOT = [
+//   // carbonThemeData.components["Accordion Group"],
+//   // carbonThemeData.components["Accordion Item"],
+//   // carbonThemeData.components["AccordionBody-Base"],
+//   // carbonThemeData.components["Bottom Sheet"],
+//   // carbonThemeData.components["BottomSheet/Footer"],
+//   // carbonThemeData.components["Dropdown/Header"],
+//   // carbonThemeData.components["Base - General Header"],
+//   // carbonThemeData.components["Dropdown Menu"],
+//   // carbonThemeData.components["Dropdown/Footer"],
+//   // carbonThemeData.components.Card,
+//   // carbonThemeData.components.Carousel,
+//   // carbonThemeData.components.Modal,
+//   // carbonThemeData.components["Modal/Footer"],
+//   // carbonThemeData.components.Popover,
+//   // carbonThemeData.components["Spotlight Popover"],
+//   // carbonThemeData.components.Collapsible,
+//   // carbonThemeData.components.Table,
+//   // carbonThemeData.components.Drawer,
+// ]
+//   .map((component) => component.key)
+//   .flat();
 
 export const CARBON_EFFECT_STYLE_IDS = Object.values(
   carbonThemeData.effectStyles

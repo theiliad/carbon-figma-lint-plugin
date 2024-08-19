@@ -13,10 +13,10 @@ import {
   BLADE_BOX_BACKGROUND_COLOR_VARIABLE_IDS,
   BLADE_BOX_BORDER_COLOR_VARIABLE_IDS,
   BLADE_COMPONENT_IDS,
-  BLADE_COMPONENT_IDS_HAVING_SLOT,
+  // BLADE_COMPONENT_IDS_HAVING_SLOT,
   BLADE_TEXT_COLOR_STYLE_IDS,
   CARBON_TEXT_TYPEFACE_STYLE_IDS,
-  CARBON_EFFECT_STYLE_IDS,
+  // CARBON_EFFECT_STYLE_IDS,
 } from "./bladeLibraryConstants";
 import { getNodeMetadata } from "./utils/getNodeMetadata";
 import { mergeObjects } from "./utils/mergeObjects";
@@ -216,35 +216,36 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
               traversedNode.mainComponent?.key ?? ""
             ))
         ) {
-          // few components that have slots we need to check if the children are valid Blade instances
-          if (
-            BLADE_COMPONENT_IDS_HAVING_SLOT.includes(
-              (traversedNode.mainComponent?.parent as ComponentSetNode)?.key ??
-                ""
-            )
-          ) {
-            // this will recursively follow the same process we follow.
-            // check for Blade's instance and if there are certain components that has slot inside it then we recursively check inside them for blade components
-            traversedNode.children.forEach((childNode) => {
-              const slotComponentsCoverage = calculateCoverage(childNode);
-              if (slotComponentsCoverage) {
-                bladeComponents += slotComponentsCoverage?.bladeComponents;
-                bladeTextStyles += slotComponentsCoverage?.bladeTextStyles;
-                bladeColorStyles += slotComponentsCoverage?.bladeColorStyles;
-                nonBladeComponents +=
-                  slotComponentsCoverage?.nonBladeComponents;
-                nonBladeComponentList = [
-                  ...nonBladeComponentList,
-                  ...slotComponentsCoverage?.nonBladeComponentList,
-                ];
-                nonBladeTextStyles +=
-                  slotComponentsCoverage?.nonBladeTextStyles;
-                nonBladeColorStyles +=
-                  slotComponentsCoverage?.nonBladeColorStyles;
-                totalLayers += slotComponentsCoverage?.totalLayers;
-              }
-            });
-          }
+          // // few components that have slots we need to check if the children are valid Blade instances
+          // if (
+          //   BLADE_COMPONENT_IDS_HAVING_SLOT.includes(
+          //     (traversedNode.mainComponent?.parent as ComponentSetNode)?.key ??
+          //       ""
+          //   )
+          // ) {
+          //   // this will recursively follow the same process we follow.
+          //   // check for Blade's instance and if there are certain components that has slot inside it then we recursively check inside them for blade components
+          //   traversedNode.children.forEach((childNode) => {
+          //     const slotComponentsCoverage = calculateCoverage(childNode);
+          //     if (slotComponentsCoverage) {
+          //       bladeComponents += slotComponentsCoverage?.bladeComponents;
+          //       bladeTextStyles += slotComponentsCoverage?.bladeTextStyles;
+          //       bladeColorStyles += slotComponentsCoverage?.bladeColorStyles;
+          //       nonBladeComponents +=
+          //         slotComponentsCoverage?.nonBladeComponents;
+          //       nonBladeComponentList = [
+          //         ...nonBladeComponentList,
+          //         ...slotComponentsCoverage?.nonBladeComponentList,
+          //       ];
+          //       nonBladeTextStyles +=
+          //         slotComponentsCoverage?.nonBladeTextStyles;
+          //       nonBladeColorStyles +=
+          //         slotComponentsCoverage?.nonBladeColorStyles;
+          //       totalLayers += slotComponentsCoverage?.totalLayers;
+          //     }
+          //   });
+          // }
+
           if (traversedNode.overrides.length) {
             // flag the instance if its overridden
             let isOverridden = false;
@@ -464,25 +465,26 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
             NODES_SKIP_FROM_COVERAGE.push("RECTANGLE");
           }
 
-          const hasEffects = traversedNode.effects?.length;
-          const hasBladeEffectStyles = CARBON_EFFECT_STYLE_IDS.includes(
-            traversedNode.effectStyleId
-          );
+          // const hasEffects = traversedNode.effects?.length;
+          // console.log("hasEffects", traversedNode, hasEffects);
+          // const hasBladeEffectStyles = CARBON_EFFECT_STYLE_IDS.includes(
+          //   traversedNode.effectStyleId
+          // );
 
-          if (hasEffects && hasBladeEffectStyles) {
-            // bladeEffectStyles++;
-          } else if (hasEffects && !hasBladeEffectStyles) {
-            // nonBladeEffectStyles++;
+          // if (hasEffects && hasBladeEffectStyles) {
+          //   // bladeEffectStyles++;
+          // } else if (hasEffects && !hasBladeEffectStyles) {
+          //   // nonBladeEffectStyles++;
 
-            nonBladeComponentList.push({
-              ...getNodeMetadata(traversedNode),
-              hint: `Effects not from Carbon's elevation styles`,
-            });
-            highlightNonBladeNode(
-              traversedNode,
-              `Effects not from Carbon's elevation styles`
-            );
-          }
+          //   nonBladeComponentList.push({
+          //     ...getNodeMetadata(traversedNode),
+          //     hint: `Effects not from Carbon's elevation styles`,
+          //   });
+          //   highlightNonBladeNode(
+          //     traversedNode,
+          //     `Effects not from Carbon's elevation styles`
+          //   );
+          // }
 
           // replace with variables
           const hasFillsVariable = traversedNode.boundVariables?.fills?.length;
@@ -732,6 +734,10 @@ const main = async (): Promise<void> => {
     width: 600,
   });
 
+  on("STORAGE_GET", async (key) => {
+    return figma.clientStorage.getAsync("key");
+  });
+
   on("FOCUS", async (nodeId) => {
     const node = figma.getNodeById(nodeId);
 
@@ -750,9 +756,7 @@ const main = async (): Promise<void> => {
     figma.notify("Calculating Coverage", { timeout: 5 });
 
     // if the user has selected to highlight nodes in red
-    if (run_configs.highlightNodesInRed) {
-      highlightNodesInRed = run_configs.highlightNodesInRed;
-    }
+    highlightNodesInRed = run_configs.highlightNodesInRed;
 
     let coverageMetrics = {};
 

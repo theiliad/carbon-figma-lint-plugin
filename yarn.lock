@@ -1108,12 +1108,28 @@
   dependencies:
     "@ibm/telemetry-js" "^1.5.0"
 
+"@carbon/icon-helpers@^10.50.0":
+  version "10.50.0"
+  resolved "https://registry.npmjs.org/@carbon/icon-helpers/-/icon-helpers-10.50.0.tgz#99c2e8a4c386fffbeb0bd0f3ee09170c776f440b"
+  integrity sha512-R+RnTIQCvrLuWBdiEyzr6zqluLpzMTawmYO97prAJ59OCoo3+mMgWjhKuggb1s0dW1zRVplrUkKusGKH+0pDnQ==
+  dependencies:
+    "@ibm/telemetry-js" "^1.5.0"
+
 "@carbon/icons-react@^11.45.0":
   version "11.45.0"
   resolved "https://registry.npmjs.org/@carbon/icons-react/-/icons-react-11.45.0.tgz#93f62d09bb5599f4a2292dc324c792f5b7d1a939"
   integrity sha512-QTf+K4BT4Vn2e9c5HDZGqTOztVOXG+4k2dAxDgAyg+18zif/kJsZKPnaFJsthxVezzELJ9cbmlXC0acbiE/zjA==
   dependencies:
     "@carbon/icon-helpers" "^10.49.0"
+    "@ibm/telemetry-js" "^1.5.0"
+    prop-types "^15.7.2"
+
+"@carbon/icons-react@^11.46.0":
+  version "11.46.0"
+  resolved "https://registry.npmjs.org/@carbon/icons-react/-/icons-react-11.46.0.tgz#46213b60de49b9d5fd908c2b0958eb54efafd61e"
+  integrity sha512-LgQy/nt2ORu1XOL7Lt6KmfpBTxBILHiX69ogpJKWR8SWSKRlzb6DB41TtfRtes1f8ViJ1sG7xE4qcWOj4QfVHQ==
+  dependencies:
+    "@carbon/icon-helpers" "^10.50.0"
     "@ibm/telemetry-js" "^1.5.0"
     prop-types "^15.7.2"
 

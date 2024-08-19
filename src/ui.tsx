@@ -8,6 +8,7 @@ import {
   StructuredListRow,
   StructuredListWrapper,
   Tab,
+  TabList,
   Tabs,
 } from "@carbon/react";
 import { Divider, render, SelectableItem } from "@create-figma-plugin/ui";
@@ -19,6 +20,7 @@ import { useEffect, useState } from "preact/hooks";
 
 // Styles
 import "!@carbon/styles/css/styles.css";
+import { View, ViewOff } from "@carbon/icons-react";
 
 const Plugin = (): JSX.Element => {
   const [scanRunning, setScanRunning] = useState(false);
@@ -38,6 +40,12 @@ const Plugin = (): JSX.Element => {
     await figma.clientStorage.setAsync("ignoredItems", newIgnoredItems);
   };
 
+  const unignoreItem = async (id) => {
+    const newIgnoredItems = ignoredItems.filter((item) => item.id !== id);
+    setIgnoredItems(newIgnoredItems);
+    await figma.clientStorage.setAsync("ignoredItems", newIgnoredItems);
+  };
+
   useEffect(() => {
     const loadIgnoredItems = async () => {
       try {
@@ -53,7 +61,7 @@ const Plugin = (): JSX.Element => {
       }
     };
 
-    console.log("CHECK IGNORED ITEMS")
+    console.log("CHECK IGNORED ITEMS");
     loadIgnoredItems();
 
     on("SCAN_FINISHED", (data) => {
@@ -63,24 +71,16 @@ const Plugin = (): JSX.Element => {
 
       setCoverageMetrics(data);
     });
+
+    on("NEW_RESULTS", (data) => {
+      console.log("NEW RESULTS", data);
+
+      setCoverageMetrics(data);
+    });
   }, []);
 
   return (
     <div>
-      {/* {coverageMetrics && (
-        <div style={{ padding: "15px" }}>
-          <p>
-            Your Carbon coverage is LOW and can be improved. Check your design
-            file for non-Carbon elements and styles, and update to the Carbon
-            library.
-          </p>
-
-          <p style={{ marginTop: "12px" }}>
-            Total components: {coverageMetrics.bladeComponents} Carbon / {coverageMetrics.totalLayers} Non-Carbon
-          </p>
-        </div>
-      )} */}
-
       <div
         style={{
           display: "flex",
@@ -91,6 +91,7 @@ const Plugin = (): JSX.Element => {
         <Button
           loading={scanRunning}
           onClick={() => {
+            console.log("highlightNodesInRed", highlightNodesInRed);
             setScanRunning(true);
             emit("SCAN_RUN", {
               highlightNodesInRed,
@@ -116,19 +117,18 @@ const Plugin = (): JSX.Element => {
 
       {coverageMetrics && (
         <div>
-          <div style={{ padding: "15px" }}>
-            <h4
-              style={{
-                marginTop: "8px",
-                marginBottom: "15px",
-              }}
-            >
-              Non-Carbon components
-            </h4>
-          </div>
+          <div style={{ paddingTop: "15px" }} />
 
-          <Button onClick={() => setCurrentTab("visible")}>Visible</Button>
-          <Button onClick={() => setCurrentTab("ignored")}>Ignored</Button>
+          <Tabs
+            onChange={({ selectedIndex }) => {
+              setCurrentTab(selectedIndex === 0 ? "visible" : "hidden");
+            }}
+          >
+            <TabList aria-label="List of tabs">
+              <Tab value="visible">Visible</Tab>
+              <Tab value="hidden">Hidden</Tab>
+            </TabList>
+          </Tabs>
 
           <StructuredListWrapper selection>
             <StructuredListBody>
@@ -160,15 +160,31 @@ const Plugin = (): JSX.Element => {
                       </StructuredListCell>
 
                       {/* Add Ignore Button */}
-                      <StructuredListCell>
+                      <StructuredListCell
+                        style={{
+                          verticalAlign: "top",
+                          paddingTop: "0px",
+                          paddingRight: "0px",
+                        }}
+                      >
                         <Button
-                          size="sm"
+                          size="lg"
                           onClick={(e) => {
                             e.stopPropagation();
-                            ignoreItem(id, type);
+
+                            if (currentTab === "visible") {
+                              ignoreItem(id, type);
+                            } else {
+                              unignoreItem(id);
+                            }
                           }}
+                          hasIconOnly
+                          iconDescription={
+                            currentTab === "visible" ? "Hide" : "Unhide"
+                          }
+                          kind="ghost"
                         >
-                          Ignore
+                          {currentTab === "visible" ? <ViewOff /> : <View />}
                         </Button>
                       </StructuredListCell>
                     </StructuredListRow>
