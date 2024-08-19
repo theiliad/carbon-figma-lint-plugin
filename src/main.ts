@@ -10,14 +10,14 @@ import {
 import { showUI } from "@create-figma-plugin/utilities";
 
 import {
-  BLADE_BOX_BACKGROUND_COLOR_VARIABLE_IDS,
-  BLADE_BOX_BORDER_COLOR_VARIABLE_IDS,
-  BLADE_COMPONENT_IDS,
-  // BLADE_COMPONENT_IDS_HAVING_SLOT,
-  BLADE_TEXT_COLOR_STYLE_IDS,
+  CARBON_BOX_BACKGROUND_COLOR_VARIABLE_IDS,
+  CARBON_BOX_BORDER_COLOR_VARIABLE_IDS,
+  CARBON_COMPONENT_IDS,
+  // CARBON_COMPONENT_IDS_HAVING_SLOT,
+  CARBON_TEXT_COLOR_STYLE_IDS,
   CARBON_TEXT_TYPEFACE_STYLE_IDS,
   // CARBON_EFFECT_STYLE_IDS,
-} from "./bladeLibraryConstants";
+} from "./carbonLibraryConstants";
 import { getNodeMetadata } from "./utils/getNodeMetadata";
 import { mergeObjects } from "./utils/mergeObjects";
 import {
@@ -81,12 +81,12 @@ const NODES_SKIP_FROM_COVERAGE = [
   "ELLIPSE",
   "INSTANCE",
 ];
-const nonBladeHighlighterNodes: BaseNode[] = [];
-const bladeCoverageCards: BaseNode[] = [];
+const nonCarbonHighlighterNodes: BaseNode[] = [];
+const carbonCoverageCards: BaseNode[] = [];
 
 let highlightNodesInRed = false;
 
-const highlightNonBladeNode = (node: SceneNode, desc?: string): void => {
+const highlightNonCarbonNode = (node: SceneNode, desc?: string): void => {
   if (highlightNodesInRed) {
     const highlighterBox = figma.createRectangle();
     const nodeType = `${node.type
@@ -102,7 +102,7 @@ const highlightNonBladeNode = (node: SceneNode, desc?: string): void => {
       { type: "SOLID", color: { r: 0, g: 0, b: 0 }, opacity: 0 },
     ];
     highlighterBox.strokes = [{ type: "SOLID", color: { r: 0.7, g: 0, b: 0 } }];
-    nonBladeHighlighterNodes.push(highlighterBox);
+    nonCarbonHighlighterNodes.push(highlighterBox);
   }
 };
 
@@ -125,15 +125,15 @@ const traverseUpTillMainFrame = (node: BaseNode): BaseNode => {
 };
 
 const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
-  let bladeComponents = 0;
-  let bladeTextStyles = 0;
-  let bladeColorStyles = 0;
-  // let bladeEffectStyles = 0;
-  let nonBladeComponents = 0;
-  let nonBladeComponentList = [];
-  let nonBladeTextStyles = 0;
-  let nonBladeColorStyles = 0;
-  // let nonBladeEffectStyles = 0;
+  let carbonComponents = 0;
+  let carbonTextStyles = 0;
+  let carbonColorStyles = 0;
+  // let carbonEffectStyles = 0;
+  let nonCarbonComponents = 0;
+  let nonCarbonComponentList = [];
+  let nonCarbonTextStyles = 0;
+  let nonCarbonColorStyles = 0;
+  // let nonCarbonEffectStyles = 0;
   let totalLayers = 0;
 
   try {
@@ -154,38 +154,38 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
 
         if (
           traversedNode.type === "INSTANCE" &&
-          (BLADE_COMPONENT_IDS.includes(
+          (CARBON_COMPONENT_IDS.includes(
             (traversedNode.mainComponent?.parent as ComponentSetNode)?.key ?? ""
           ) ||
-            BLADE_COMPONENT_IDS.includes(
+            CARBON_COMPONENT_IDS.includes(
               traversedNode.mainComponent?.key ?? ""
             ))
         ) {
-          // // few components that have slots we need to check if the children are valid Blade instances
+          // // few components that have slots we need to check if the children are valid Carbon instances
           // if (
-          //   BLADE_COMPONENT_IDS_HAVING_SLOT.includes(
+          //   CARBON_COMPONENT_IDS_HAVING_SLOT.includes(
           //     (traversedNode.mainComponent?.parent as ComponentSetNode)?.key ??
           //       ""
           //   )
           // ) {
           //   // this will recursively follow the same process we follow.
-          //   // check for Blade's instance and if there are certain components that has slot inside it then we recursively check inside them for blade components
+          //   // check for Carbon's instance and if there are certain components that has slot inside it then we recursively check inside them for carbon components
           //   traversedNode.children.forEach((childNode) => {
           //     const slotComponentsCoverage = calculateCoverage(childNode);
           //     if (slotComponentsCoverage) {
-          //       bladeComponents += slotComponentsCoverage?.bladeComponents;
-          //       bladeTextStyles += slotComponentsCoverage?.bladeTextStyles;
-          //       bladeColorStyles += slotComponentsCoverage?.bladeColorStyles;
-          //       nonBladeComponents +=
-          //         slotComponentsCoverage?.nonBladeComponents;
-          //       nonBladeComponentList = [
-          //         ...nonBladeComponentList,
-          //         ...slotComponentsCoverage?.nonBladeComponentList,
+          //       carbonComponents += slotComponentsCoverage?.carbonComponents;
+          //       carbonTextStyles += slotComponentsCoverage?.carbonTextStyles;
+          //       carbonColorStyles += slotComponentsCoverage?.carbonColorStyles;
+          //       nonCarbonComponents +=
+          //         slotComponentsCoverage?.nonCarbonComponents;
+          //       nonCarbonComponentList = [
+          //         ...nonCarbonComponentList,
+          //         ...slotComponentsCoverage?.nonCarbonComponentList,
           //       ];
-          //       nonBladeTextStyles +=
-          //         slotComponentsCoverage?.nonBladeTextStyles;
-          //       nonBladeColorStyles +=
-          //         slotComponentsCoverage?.nonBladeColorStyles;
+          //       nonCarbonTextStyles +=
+          //         slotComponentsCoverage?.nonCarbonTextStyles;
+          //       nonCarbonColorStyles +=
+          //         slotComponentsCoverage?.nonCarbonColorStyles;
           //       totalLayers += slotComponentsCoverage?.totalLayers;
           //     }
           //   });
@@ -209,40 +209,40 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
               }
             });
             if (isOverridden) {
-              nonBladeComponents++;
+              nonCarbonComponents++;
 
-              nonBladeComponentList.push({
+              nonCarbonComponentList.push({
                 ...getNodeMetadata(traversedNode),
                 code: nonCarbonErrorTypes.OverriddenCarbonInstance,
               });
-              highlightNonBladeNode(
+              highlightNonCarbonNode(
                 traversedNode,
                 nonCarbonErrorMessages.OverriddenCarbonInstance
               );
             } else {
-              bladeComponents++;
+              carbonComponents++;
             }
           } else {
-            bladeComponents++;
+            carbonComponents++;
           }
           totalLayers++;
         } else if (traversedNode.type === "INSTANCE") {
-          nonBladeComponents++;
+          nonCarbonComponents++;
 
-          nonBladeComponentList.push({
+          nonCarbonComponentList.push({
             ...getNodeMetadata(traversedNode),
             code: nonCarbonErrorTypes.NotCarbonInstance,
           });
 
-          highlightNonBladeNode(
+          highlightNonCarbonNode(
             traversedNode,
             nonCarbonErrorMessages.NotCarbonInstance
           );
         } else if (traversedNode.type === "TEXT") {
-          // check if the text is using Blade's text styles
-          let isMixedTextStyleOfBlade = false;
+          // check if the text is using Carbon's text styles
+          let isMixedTextStyleOfCarbon = false;
           let traversedNodeTextStyleId = "";
-          let isTextRangeFillsOfBlade = false;
+          let isTextRangeFillsOfCarbon = false;
           let traversedNodeColorVariableId = "";
 
           /**
@@ -250,7 +250,7 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
            * and do getRangeTextStyleId(charIndex,charIndex+1) instead of textStyleId
            */
           if (traversedNode?.textStyleId === figma.mixed) {
-            isMixedTextStyleOfBlade = traversedNode.characters
+            isMixedTextStyleOfCarbon = traversedNode.characters
               .split("")
               .every((character, index) => {
                 if (/\s/.test(character)) {
@@ -266,15 +266,15 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
                 );
               });
 
-            if (isMixedTextStyleOfBlade) {
-              bladeTextStyles++;
+            if (isMixedTextStyleOfCarbon) {
+              carbonTextStyles++;
             } else {
-              nonBladeTextStyles++;
-              nonBladeComponentList.push({
+              nonCarbonTextStyles++;
+              nonCarbonComponentList.push({
                 ...getNodeMetadata(traversedNode),
                 code: nonCarbonErrorTypes.NotCarbonText,
               });
-              highlightNonBladeNode(
+              highlightNonCarbonNode(
                 traversedNode,
                 nonCarbonErrorMessages.NotCarbonText
               );
@@ -288,67 +288,67 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
                 styleId.includes(traversedNodeTextStyleId)
               )
             ) {
-              bladeTextStyles++;
+              carbonTextStyles++;
             } else {
-              nonBladeTextStyles++;
+              nonCarbonTextStyles++;
 
-              nonBladeComponentList.push({
+              nonCarbonComponentList.push({
                 ...getNodeMetadata(traversedNode),
                 code: nonCarbonErrorTypes.NotCarbonTextStyle,
               });
-              highlightNonBladeNode(
+              highlightNonCarbonNode(
                 traversedNode,
                 nonCarbonErrorMessages.NotCarbonTextStyle
               );
             }
           }
 
-          // check if text is using blade color styles
+          // check if text is using carbon color styles
           if (traversedNode.boundVariables?.fills?.length) {
             traversedNodeColorVariableId =
               traversedNode.boundVariables.fills[0].id.split("/")[0];
 
             if (
-              BLADE_TEXT_COLOR_STYLE_IDS.includes(
+              CARBON_TEXT_COLOR_STYLE_IDS.includes(
                 traversedNodeColorVariableId ?? ""
               )
             ) {
-              bladeColorStyles++;
+              carbonColorStyles++;
             } else {
-              nonBladeColorStyles++;
+              nonCarbonColorStyles++;
 
-              nonBladeComponentList.push({
+              nonCarbonComponentList.push({
                 ...getNodeMetadata(traversedNode),
                 code: nonCarbonErrorTypes.NotCarbonTextColor,
               });
-              highlightNonBladeNode(
+              highlightNonCarbonNode(
                 traversedNode,
                 nonCarbonErrorMessages.NotCarbonTextColor
               );
             }
           }
-          // check if text is using blade text styles
+          // check if text is using carbon text styles
           // textRangeFills is used when the text has different colors for different characters
           if (traversedNode.boundVariables?.textRangeFills?.length) {
-            isTextRangeFillsOfBlade =
+            isTextRangeFillsOfCarbon =
               traversedNode.boundVariables.textRangeFills.every((fill) => {
                 if (
-                  BLADE_TEXT_COLOR_STYLE_IDS.includes(fill.id.split("/")[0])
+                  CARBON_TEXT_COLOR_STYLE_IDS.includes(fill.id.split("/")[0])
                 ) {
                   return true;
                 }
                 return false;
               });
-            if (isTextRangeFillsOfBlade) {
-              bladeTextStyles++;
+            if (isTextRangeFillsOfCarbon) {
+              carbonTextStyles++;
             } else {
-              nonBladeTextStyles++;
+              nonCarbonTextStyles++;
 
-              nonBladeComponentList.push({
+              nonCarbonComponentList.push({
                 ...getNodeMetadata(traversedNode),
                 code: nonCarbonErrorTypes.NotCarbonTextRangeColor,
               });
-              highlightNonBladeNode(
+              highlightNonCarbonNode(
                 traversedNode,
                 nonCarbonErrorMessages.NotCarbonTextRangeColor
               );
@@ -359,37 +359,37 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
             traversedNode.boundVariables &&
             Object.keys(traversedNode.boundVariables).length === 0
           ) {
-            nonBladeTextStyles++;
+            nonCarbonTextStyles++;
 
-            nonBladeComponentList.push({
+            nonCarbonComponentList.push({
               ...getNodeMetadata(traversedNode),
               code: nonCarbonErrorTypes.NotCarbonTextStyle,
             });
-            highlightNonBladeNode(
+            highlightNonCarbonNode(
               traversedNode,
               nonCarbonErrorMessages.NotCarbonTextStyle
             );
           }
 
-          // this check is for typography components, if the typography uses color and text both from blade styles then they are typography blade components
+          // this check is for typography components, if the typography uses color and text both from carbon styles then they are typography carbon components
           if (
-            (isMixedTextStyleOfBlade ||
+            (isMixedTextStyleOfCarbon ||
               CARBON_TEXT_TYPEFACE_STYLE_IDS.includes(
                 traversedNodeTextStyleId
               )) &&
-            (isTextRangeFillsOfBlade ||
-              BLADE_TEXT_COLOR_STYLE_IDS.includes(traversedNodeColorVariableId))
+            (isTextRangeFillsOfCarbon ||
+              CARBON_TEXT_COLOR_STYLE_IDS.includes(traversedNodeColorVariableId))
           ) {
-            bladeComponents++;
+            carbonComponents++;
           }
         } else if (traversedNode.type === "LINE") {
-          nonBladeComponents++;
+          nonCarbonComponents++;
 
-          nonBladeComponentList.push({
+          nonCarbonComponentList.push({
             ...getNodeMetadata(traversedNode),
             code: nonCarbonErrorTypes.NotCarbonDivider,
           });
-          highlightNonBladeNode(
+          highlightNonCarbonNode(
             traversedNode,
             nonCarbonErrorMessages.NotCarbonDivider
           );
@@ -408,20 +408,20 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
           }
 
           // const hasEffects = traversedNode.effects?.length;
-          // const hasBladeEffectStyles = CARBON_EFFECT_STYLE_IDS.includes(
+          // const hasCarbonEffectStyles = CARBON_EFFECT_STYLE_IDS.includes(
           //   traversedNode.effectStyleId
           // );
 
-          // if (hasEffects && hasBladeEffectStyles) {
-          //   // bladeEffectStyles++;
-          // } else if (hasEffects && !hasBladeEffectStyles) {
-          //   // nonBladeEffectStyles++;
+          // if (hasEffects && hasCarbonEffectStyles) {
+          //   // carbonEffectStyles++;
+          // } else if (hasEffects && !hasCarbonEffectStyles) {
+          //   // nonCarbonEffectStyles++;
 
-          //   nonBladeComponentList.push({
+          //   nonCarbonComponentList.push({
           //     ...getNodeMetadata(traversedNode),
           //     hint: `Effects not from Carbon's elevation styles`,
           //   });
-          //   highlightNonBladeNode(
+          //   highlightNonCarbonNode(
           //     traversedNode,
           //     `Effects not from Carbon's elevation styles`
           //   );
@@ -432,58 +432,58 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
           const hasStrokesVariable =
             traversedNode.boundVariables?.strokes?.length;
           if (!isImage && (hasFillsVariable || hasStrokesVariable)) {
-            // check if rectangle uses blade surface.border.* colors for border
+            // check if rectangle uses carbon surface.border.* colors for border
             if (hasStrokesVariable) {
               const traversedNodeColorVariableId =
                 traversedNode.boundVariables.strokes[0].id.split("/")[0];
               if (
-                BLADE_BOX_BORDER_COLOR_VARIABLE_IDS.includes(
+                CARBON_BOX_BORDER_COLOR_VARIABLE_IDS.includes(
                   traversedNodeColorVariableId ?? ""
                 )
               ) {
-                bladeColorStyles++;
+                carbonColorStyles++;
               } else {
-                nonBladeColorStyles++;
+                nonCarbonColorStyles++;
 
-                nonBladeComponentList.push({
+                nonCarbonComponentList.push({
                   ...getNodeMetadata(traversedNode),
                   code: nonCarbonErrorTypes.NotCarbonBoxBorderColor,
                 });
-                highlightNonBladeNode(
+                highlightNonCarbonNode(
                   traversedNode,
                   nonCarbonErrorMessages.NotCarbonBoxBorderColor
                 );
               }
             }
-            // check if rectangle is using blade surface.background.* tokens for background
+            // check if rectangle is using carbon surface.background.* tokens for background
             if (hasFillsVariable) {
               const traversedNodeFillStyleId =
                 traversedNode.boundVariables.fills[0].id.split("/")[0];
               if (
-                BLADE_BOX_BACKGROUND_COLOR_VARIABLE_IDS.includes(
+                CARBON_BOX_BACKGROUND_COLOR_VARIABLE_IDS.includes(
                   traversedNodeFillStyleId ?? ""
                 )
               ) {
-                bladeColorStyles++;
+                carbonColorStyles++;
               } else {
-                nonBladeColorStyles++;
+                nonCarbonColorStyles++;
 
-                nonBladeComponentList.push({
+                nonCarbonComponentList.push({
                   ...getNodeMetadata(traversedNode),
                   code: nonCarbonErrorTypes.NotCarbonBoxBackgroundColor,
                 });
-                highlightNonBladeNode(
+                highlightNonCarbonNode(
                   traversedNode,
                   nonCarbonErrorMessages.NotCarbonBoxBackgroundColor
                 );
               }
             }
           } else if (!isImage) {
-            nonBladeComponentList.push({
+            nonCarbonComponentList.push({
               ...getNodeMetadata(traversedNode),
               code: nonCarbonErrorTypes.NotCarbonBox,
             });
-            highlightNonBladeNode(
+            highlightNonCarbonNode(
               traversedNode,
               nonCarbonErrorMessages.NotCarbonBox
             );
@@ -523,15 +523,15 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
             Boolean(hasStrokes || hasEffects || hasFills) &&
             !Boolean(traversedNode.fills === figma.mixed)
           ) {
-            // this is non-blade component error
+            // this is non-carbon component error
             // push the frame layer to be included in component count
-            nonBladeComponents++;
+            nonCarbonComponents++;
 
-            nonBladeComponentList.push({
+            nonCarbonComponentList.push({
               ...getNodeMetadata(traversedNode),
               code: nonCarbonErrorTypes.NotCarbonComponent,
             });
-            highlightNonBladeNode(
+            highlightNonCarbonNode(
               traversedNode,
               nonCarbonErrorMessages.NotCarbonComponent
             );
@@ -550,11 +550,11 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
           ].includes(traversedNode.type) &&
           getParentNode(traversedNode)?.type !== "PAGE"
         ) {
-          nonBladeComponentList.push({
+          nonCarbonComponentList.push({
             ...getNodeMetadata(traversedNode),
             code: nonCarbonErrorTypes.NotCreatedUsingCarbonComponentsOrTokens,
           });
-          highlightNonBladeNode(
+          highlightNonCarbonNode(
             traversedNode,
             nonCarbonErrorMessages.NotCreatedUsingCarbonComponentsOrTokens
           );
@@ -563,7 +563,7 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
         if (
           getParentNode(traversedNode)?.type !== "PAGE" &&
           !NODES_SKIP_FROM_COVERAGE.includes(traversedNode.type) &&
-          // if the frame instances are from Blade's components then we don't want to include them in the count because these are components with slots
+          // if the frame instances are from Carbon's components then we don't want to include them in the count because these are components with slots
           !ignoreInstanceFrameNodeNames.includes(traversedNode.name)
         ) {
           // exclude the main frame itself from the count to remove false negatives
@@ -592,15 +592,15 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
 
         if (
           traversedNode.type === "INSTANCE" &&
-          (BLADE_COMPONENT_IDS.includes(
+          (CARBON_COMPONENT_IDS.includes(
             (traversedNode.mainComponent?.parent as ComponentSetNode)?.key ?? ""
           ) ||
-            BLADE_COMPONENT_IDS.includes(
+            CARBON_COMPONENT_IDS.includes(
               traversedNode.mainComponent?.key ?? ""
             ))
         ) {
-          // we shall stop traversal further if we have found that an instance is Blade instance
-          // if we keep traversing then chances are the metrics will be skewed because Blade components are composed of non-blade themselves
+          // we shall stop traversal further if we have found that an instance is Carbon instance
+          // if we keep traversing then chances are the metrics will be skewed because Carbon components are composed of non-carbon themselves
           // in code analytics we can add "data-*" to all the children till leaf nodes but over here we can't hence we stop
           return true;
         }
@@ -614,18 +614,18 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
   }
 
   return {
-    bladeComponents,
-    bladeTextStyles,
-    bladeColorStyles,
-    nonBladeComponents,
-    nonBladeComponentList,
-    nonBladeTextStyles,
-    nonBladeColorStyles,
+    carbonComponents,
+    carbonTextStyles,
+    carbonColorStyles,
+    nonCarbonComponents,
+    nonCarbonComponentList,
+    nonCarbonTextStyles,
+    nonCarbonColorStyles,
     totalLayers,
-    bladeCoverage:
-      bladeComponents === 0 && totalLayers === 0
+    carbonCoverage:
+      carbonComponents === 0 && totalLayers === 0
         ? 0
-        : Number((bladeComponents / totalLayers) * 100),
+        : Number((carbonComponents / totalLayers) * 100),
   };
 };
 
@@ -654,18 +654,18 @@ const getPageMainFrameNodes = (nodes: readonly SceneNode[]): SceneNode[] => {
 
 const removeOldGroupNodes = (): void => {
   // remove all teh old group nodes
-  const bladeCoverageCardsGroup = figma.currentPage.findOne(
+  const carbonCoverageCardsGroup = figma.currentPage.findOne(
     (node) => node.name === "Carbon Coverage Cards"
   );
-  const nonBladeItemsGroup = figma.currentPage.findOne(
+  const nonCarbonItemsGroup = figma.currentPage.findOne(
     (node) => node.name === "Non Carbon Items"
   );
 
-  if (bladeCoverageCardsGroup) {
-    bladeCoverageCardsGroup.remove();
+  if (carbonCoverageCardsGroup) {
+    carbonCoverageCardsGroup.remove();
   }
-  if (nonBladeItemsGroup) {
-    nonBladeItemsGroup.remove();
+  if (nonCarbonItemsGroup) {
+    nonCarbonItemsGroup.remove();
   }
 };
 
@@ -728,21 +728,21 @@ const main = async (): Promise<void> => {
             _metrics as AnyObject
           );
         }
-        if (nonBladeHighlighterNodes.length) {
-          const nonBladeHighterNodesGroup = figma.group(
-            nonBladeHighlighterNodes,
+        if (nonCarbonHighlighterNodes.length) {
+          const nonCarbonHighterNodesGroup = figma.group(
+            nonCarbonHighlighterNodes,
             figma.currentPage
           );
-          nonBladeHighterNodesGroup.name = "Non-Carbon Items";
-          nonBladeHighterNodesGroup.expanded = false;
+          nonCarbonHighterNodesGroup.name = "Non-Carbon Items";
+          nonCarbonHighterNodesGroup.expanded = false;
         }
-        if (bladeCoverageCards.length) {
-          const bladeCoverageCardsGroup = figma.group(
-            bladeCoverageCards,
+        if (carbonCoverageCards.length) {
+          const carbonCoverageCardsGroup = figma.group(
+            carbonCoverageCards,
             figma.currentPage
           );
-          bladeCoverageCardsGroup.name = "Carbon Coverage Cards";
-          bladeCoverageCardsGroup.expanded = false;
+          carbonCoverageCardsGroup.name = "Carbon Coverage Cards";
+          carbonCoverageCardsGroup.expanded = false;
         }
       }
     } catch (error: unknown) {

@@ -1740,30 +1740,12 @@ export const carbonThemeData = {
   effectStyles: {},
 };
 
-export const BLADE_COMPONENT_IDS = Object.values(
+export const CARBON_COMPONENT_IDS = Object.values(
   carbonThemeData.components
 ).map((component) => component.key);
 
 // Carousel, Modal, Bottom Sheet, Card, Dropdown Menu
-// export const BLADE_COMPONENT_IDS_HAVING_SLOT = [
-//   // carbonThemeData.components["Accordion Group"],
-//   // carbonThemeData.components["Accordion Item"],
-//   // carbonThemeData.components["AccordionBody-Base"],
-//   // carbonThemeData.components["Bottom Sheet"],
-//   // carbonThemeData.components["BottomSheet/Footer"],
-//   // carbonThemeData.components["Dropdown/Header"],
-//   // carbonThemeData.components["Base - General Header"],
-//   // carbonThemeData.components["Dropdown Menu"],
-//   // carbonThemeData.components["Dropdown/Footer"],
-//   // carbonThemeData.components.Card,
-//   // carbonThemeData.components.Carousel,
-//   // carbonThemeData.components.Modal,
-//   // carbonThemeData.components["Modal/Footer"],
-//   // carbonThemeData.components.Popover,
-//   // carbonThemeData.components["Spotlight Popover"],
-//   // carbonThemeData.components.Collapsible,
-//   // carbonThemeData.components.Table,
-//   // carbonThemeData.components.Drawer,
+// export const CARBON_COMPONENT_IDS_HAVING_SLOT = [
 // ]
 //   .map((component) => component.key)
 //   .flat();
@@ -1776,12 +1758,12 @@ export const CARBON_TEXT_TYPEFACE_STYLE_IDS = Object.values(
   carbonThemeData.textStyles
 );
 
-export const BLADE_TEXT_COLOR_STYLE_IDS = Object.values(
+export const CARBON_TEXT_COLOR_STYLE_IDS = Object.values(
   carbonThemeData.colorStyles
 );
 
 const allowedBackgroundColorTokenNames = ["surface/background"];
-export const BLADE_BOX_BACKGROUND_COLOR_VARIABLE_IDS = Object.entries(
+export const CARBON_BOX_BACKGROUND_COLOR_VARIABLE_IDS = Object.entries(
   carbonThemeData.colorStyles
 )
   .map(([colorVariableTokenName, colorVariableKey]) => {
@@ -1799,7 +1781,7 @@ export const BLADE_BOX_BACKGROUND_COLOR_VARIABLE_IDS = Object.entries(
   .filter(Boolean);
 
 const allowedBorderColorTokenNames = ["surface/border"];
-export const BLADE_BOX_BORDER_COLOR_VARIABLE_IDS = Object.entries(
+export const CARBON_BOX_BORDER_COLOR_VARIABLE_IDS = Object.entries(
   carbonThemeData.colorStyles
 )
   .map(([colorVariableTokenName, colorVariableKey]) => {

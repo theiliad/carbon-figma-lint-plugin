@@ -157,7 +157,7 @@ const Plugin = (): JSX.Element => {
 
           <StructuredListWrapper selection>
             <StructuredListBody>
-              {coverageMetrics.nonBladeComponentList
+              {coverageMetrics.nonCarbonComponentList
                 // .filter((node) =>
                 //   currentTab === "visible"
                 //     ? !ignoredItems.find(

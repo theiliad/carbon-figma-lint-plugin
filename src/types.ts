@@ -1,15 +1,15 @@
 export type CoverageMetrics = {
-  bladeComponents: number;
-  bladeTextStyles: number;
-  bladeColorStyles: number;
-  // bladeEffectStyles: number;
-  nonBladeComponents: number;
-  nonBladeComponentList: any[];
-  nonBladeTextStyles: number;
-  nonBladeColorStyles: number;
-  // nonBladeEffectStyles: number;
+  carbonComponents: number;
+  carbonTextStyles: number;
+  carbonColorStyles: number;
+  // carbonEffectStyles: number;
+  nonCarbonComponents: number;
+  nonCarbonComponentList: any[];
+  nonCarbonTextStyles: number;
+  nonCarbonColorStyles: number;
+  // nonCarbonEffectStyles: number;
   totalLayers: number;
-  bladeCoverage: number;
+  carbonCoverage: number;
 };
 
 export enum ClientStorageEventTypes {
