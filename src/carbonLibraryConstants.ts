@@ -1,3 +1,5 @@
+import { iconComponentKeys } from "./iconComponentKeys";
+
 export const carbonThemeData = {
   components: {
     "Spacing block": {
@@ -558,6 +560,7 @@ export const carbonThemeData = {
     "UI shell - Right panel item": {
       key: "74542f7305106f97165604c0ae1b6c199caa6e6a",
     },
+    ...iconComponentKeys,
   },
   colorStyles: {
     background: "VariableID:eec6be2ea83fddd3ef49e7162876fe49d2b9e2f6",

@@ -50,6 +50,30 @@ export enum nonCarbonErrorMessages {
   NotCreatedUsingCarbonComponentsOrTokens = "Not created using Carbon components or tokens",
 }
 
+export const colorErrorCodes: (keyof typeof nonCarbonErrorMessages)[] = [
+  "NotCarbonTextColor",
+  "NotCarbonTextRangeColor",
+  "NotCarbonBoxBorderColor",
+  "NotCarbonBoxBackgroundColor",
+];
+
+export const typeErrorCodes: (keyof typeof nonCarbonErrorMessages)[] = [
+  "NotCarbonTextStyle",
+];
+
+export const componentErrorCodes: (keyof typeof nonCarbonErrorMessages)[] = [
+  "OverriddenCarbonInstance",
+  "NotCarbonInstance",
+  "NotCarbonComponent",
+  "NotCarbonDivider",
+  "NotCarbonBox",
+  "NotCreatedUsingCarbonComponentsOrTokens",
+];
+
+export const effectErrorCodes: (keyof typeof nonCarbonErrorMessages)[] = [
+  "NotCarbonElevation",
+];
+
 export type IgnoredItem = {
   id: string;
   code: string;

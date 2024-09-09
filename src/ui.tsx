@@ -16,23 +16,73 @@ import { useEffect, useState } from "preact/hooks";
 import { View, ViewOff } from "@carbon/icons-react";
 import {
   ClientStorageEventTypes,
+  colorErrorCodes,
+  componentErrorCodes,
+  effectErrorCodes,
   IgnoredItem,
   nonCarbonErrorMessages,
+  typeErrorCodes,
 } from "./types";
 
 // Styles
 import "!@carbon/styles/css/styles.css";
 import "!./styles.css";
+import { useMemo } from "react";
 
 const Plugin = (): JSX.Element => {
   const [scanRunning, setScanRunning] = useState(false);
   const [coverageMetrics, setCoverageMetrics] = useState(null);
 
+  // Filter out color errors
+  const colorErrors = useMemo(() => {
+    return coverageMetrics?.nonCarbonComponentList?.filter((node: any) =>
+      colorErrorCodes.includes(node.code)
+    );
+  }, [coverageMetrics]);
+
+  // Filter out type errors
+  const typeErrors = useMemo(() => {
+    return coverageMetrics?.nonCarbonComponentList?.filter((node: any) =>
+      typeErrorCodes.includes(node.code)
+    );
+  }, [coverageMetrics]);
+
+  // Filter out component errors
+  const componentErrors = useMemo(() => {
+    return coverageMetrics?.nonCarbonComponentList?.filter((node: any) =>
+      componentErrorCodes.includes(node.code)
+    );
+  }, [coverageMetrics]);
+
+  // Filter out effect errors
+  const effectErrors = useMemo(() => {
+    return coverageMetrics?.nonCarbonComponentList?.filter((node: any) =>
+      effectErrorCodes.includes(node.code)
+    );
+  }, [coverageMetrics]);
+
+  const [currentTab, setCurrentTab] = useState("all");
+  const displayData = useMemo(() => {
+    switch (currentTab) {
+      case "all":
+        return coverageMetrics?.nonCarbonComponentList;
+      case "color":
+        return colorErrors;
+      case "type":
+        return typeErrors;
+      case "component":
+        return componentErrors;
+      case "effects":
+        return effectErrors;
+      default:
+        return coverageMetrics?.nonCarbonComponentList;
+    }
+  }, [currentTab, coverageMetrics]);
+
   const [highlightNodesInRed, setHighlightNodesInRed] = useState(false);
 
   // Add state for ignored items and current tab
   const [ignoredItems, setIgnoredItems] = useState<IgnoredItem[]>([]);
-  const [currentTab, setCurrentTab] = useState("visible");
 
   useEffect(() => {
     /*
@@ -50,7 +100,6 @@ const Plugin = (): JSX.Element => {
     //  */
     // // Handle incoming messages
     // const handleLoadOrUpdate = (newItems: IgnoredItem[]) => {
-    //   console.log("came in", newItems);
     //   setIgnoredItems(newItems);
     // };
 
@@ -78,8 +127,6 @@ const Plugin = (): JSX.Element => {
   //   );
   //   emit(ClientStorageEventTypes.RemoveIgnoredItems, item);
   // };
-
-  console.log("ignoredItems", ignoredItems);
 
   return (
     <div>
@@ -120,8 +167,8 @@ const Plugin = (): JSX.Element => {
         <Button
           loading={scanRunning}
           onClick={() => {
-            console.log("highlightNodesInRed", highlightNodesInRed);
             setScanRunning(true);
+
             emit("SCAN_RUN", {
               highlightNodesInRed,
             });
@@ -145,52 +192,65 @@ const Plugin = (): JSX.Element => {
         <div>
           <div style={{ paddingTop: "15px" }} />
 
-          {/* <Tabs
+          <Tabs
             onChange={({ selectedIndex }) => {
-              setCurrentTab(selectedIndex === 0 ? "visible" : "hidden");
+              setCurrentTab(
+                ["all", "color", "type", "component", "effects"][selectedIndex]
+              );
             }}
           >
             <TabList aria-label="List of tabs">
-              <Tab value="visible">Visible</Tab>
-              <Tab value="hidden">Hidden</Tab>
+              <Tab value="all">
+                All (
+                {(
+                  coverageMetrics.nonCarbonComponentList?.length || 0
+                ).toLocaleString()}
+                )
+              </Tab>
+
+              <Tab value="color">
+                Color ({(colorErrors?.length || 0).toLocaleString()})
+              </Tab>
+
+              <Tab value="type">
+                Type ({(typeErrors?.length || 0).toLocaleString()})
+              </Tab>
+
+              <Tab value="component">
+                Components ({(componentErrors?.length || 0).toLocaleString()})
+              </Tab>
+
+              <Tab value="effects">
+                Effects ({(effectErrors?.length || 0).toLocaleString()})
+              </Tab>
             </TabList>
-          </Tabs> */}
+          </Tabs>
 
           <StructuredListWrapper selection>
             <StructuredListBody>
-              {coverageMetrics.nonCarbonComponentList
-                // .filter((node) =>
-                //   currentTab === "visible"
-                //     ? !ignoredItems.find(
-                //         (d) => d.id === node.id && d.code === node.code
-                //       )
-                //     : ignoredItems.find(
-                //         (d) => d.id === node.id && d.code === node.code
-                //       )
-                // )
-                .map((node: any, i: number) => {
-                  const { id, name, code } = node;
+              {displayData.map((node: any, i: number) => {
+                const { id, name, code } = node;
 
-                  return (
-                    <StructuredListRow
-                      key={`row-${i}`}
-                      onClick={() => {
-                        emit("FOCUS", id);
-                      }}
-                      style={{ cursor: "pointer" }}
+                return (
+                  <StructuredListRow
+                    key={`row-${i}`}
+                    onClick={() => {
+                      emit("FOCUS", id);
+                    }}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <StructuredListCell
+                      style={{ width: "30%", cursor: "pointer" }}
                     >
-                      <StructuredListCell
-                        style={{ width: "30%", cursor: "pointer" }}
-                      >
-                        {name}
-                      </StructuredListCell>
+                      {name}
+                    </StructuredListCell>
 
-                      <StructuredListCell style={{ cursor: "pointer" }}>
-                        {nonCarbonErrorMessages[code]}
-                      </StructuredListCell>
+                    <StructuredListCell style={{ cursor: "pointer" }}>
+                      {nonCarbonErrorMessages[code]}
+                    </StructuredListCell>
 
-                      {/* Add Ignore Button */}
-                      {/* <StructuredListCell
+                    {/* Add Ignore Button */}
+                    {/* <StructuredListCell
                         style={{
                           verticalAlign: "top",
                           paddingTop: "0px",
@@ -203,7 +263,6 @@ const Plugin = (): JSX.Element => {
                             e.stopPropagation();
 
                             if (currentTab === "visible") {
-                              console.log("ewgweg", node);
                               addIgnoredItem({
                                 id: node.id,
                                 code: node.code,
@@ -224,9 +283,9 @@ const Plugin = (): JSX.Element => {
                           {currentTab === "visible" ? <ViewOff /> : <View />}
                         </Button>
                       </StructuredListCell> */}
-                    </StructuredListRow>
-                  );
-                })}
+                  </StructuredListRow>
+                );
+              })}
             </StructuredListBody>
           </StructuredListWrapper>
         </div>

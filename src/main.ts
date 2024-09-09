@@ -378,7 +378,9 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
                 traversedNodeTextStyleId
               )) &&
             (isTextRangeFillsOfCarbon ||
-              CARBON_TEXT_COLOR_STYLE_IDS.includes(traversedNodeColorVariableId))
+              CARBON_TEXT_COLOR_STYLE_IDS.includes(
+                traversedNodeColorVariableId
+              ))
           ) {
             carbonComponents++;
           }
@@ -604,6 +606,7 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
           // in code analytics we can add "data-*" to all the children till leaf nodes but over here we can't hence we stop
           return true;
         }
+
         return false;
       }
     );
