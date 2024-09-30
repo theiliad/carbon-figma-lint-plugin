@@ -27,6 +27,7 @@ import {
   nonCarbonErrorMessages,
   nonCarbonErrorTypes,
 } from "./types";
+import { getParentDetachedInfo } from "./utils/getParentDetachedInfo";
 
 let ignoredItems: IgnoredItem[] = [];
 
@@ -524,7 +525,8 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
             traversedNode.fillStyleId;
           if (
             Boolean(hasStrokes || hasEffects || hasFills) &&
-            !Boolean(traversedNode.fills === figma.mixed)
+            !Boolean(traversedNode.fills === figma.mixed) &&
+            getParentDetachedInfo(traversedNode) === null
           ) {
             // this is non-carbon component error
             // push the frame layer to be included in component count
