@@ -1761,38 +1761,9 @@ export const CARBON_TEXT_TYPEFACE_STYLE_IDS = Object.values(
   carbonThemeData.textStyles
 );
 
-export const CARBON_TEXT_COLOR_STYLE_IDS = Object.values(
+export const CARBON_COLOR_STYLE_IDS = Object.values(
   carbonThemeData.colorStyles
 );
-
-const allowedBackgroundColorTokenNames = ["surface/background"];
-export const CARBON_BOX_BACKGROUND_COLOR_VARIABLE_IDS = Object.entries(
-  carbonThemeData.colorStyles
-)
-  .map(([colorVariableTokenName, colorVariableKey]) => {
-    return allowedBackgroundColorTokenNames.reduce<string[]>(
-      (acc, backgroundTokenName) => {
-        if (colorVariableTokenName.includes(backgroundTokenName)) {
-          return [...acc, colorVariableKey];
-        }
-        return acc;
-      },
-      []
-    );
-  })
-  .flat()
-  .filter(Boolean);
-
-const allowedBorderColorTokenNames = ["surface/border"];
-export const CARBON_BOX_BORDER_COLOR_VARIABLE_IDS = Object.entries(
-  carbonThemeData.colorStyles
-)
-  .map(([colorVariableTokenName, colorVariableKey]) => {
-    return allowedBorderColorTokenNames.reduce((_, borderTokenName) => {
-      if (colorVariableTokenName.includes(borderTokenName)) {
-        return colorVariableKey;
-      }
-      return "";
-    }, "");
-  })
-  .filter(Boolean);
+export const CARBON_TEXT_COLOR_STYLE_IDS = CARBON_COLOR_STYLE_IDS;
+export const CARBON_BOX_BACKGROUND_COLOR_VARIABLE_IDS = CARBON_COLOR_STYLE_IDS;
+export const CARBON_BOX_BORDER_COLOR_VARIABLE_IDS = CARBON_COLOR_STYLE_IDS;
