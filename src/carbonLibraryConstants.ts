@@ -1492,253 +1492,253 @@ export const carbonThemeData = {
   },
   textStyles: {
     "Non-variable/Body styles/body-compact-01":
-      "S:898f7558f0697d2d0632fce5fef555bc870406ff,",
+      "S:898f7558f0697d2d0632fce5fef555bc870406ff",
     "Non-variable/Body styles/body-compact-02":
-      "S:7623e21feb01d8dd39d0a273d47815034e892492,",
+      "S:7623e21feb01d8dd39d0a273d47815034e892492",
     "Non-variable/Body styles/body-01":
-      "S:a9f9e85e376c04c8e693299adc0d767576dc9214,",
+      "S:a9f9e85e376c04c8e693299adc0d767576dc9214",
     "Non-variable/Body styles/body-02":
-      "S:7500e776d4df5ff743697f476cc7ce4b20b5e14a,",
+      "S:7500e776d4df5ff743697f476cc7ce4b20b5e14a",
     "Non-variable/Utility styles/label-01":
-      "S:543e35c5961610b79d4a01bb310fa31b109b07f9,",
+      "S:543e35c5961610b79d4a01bb310fa31b109b07f9",
     "Non-variable/Utility styles/label-02":
-      "S:2b268476922a9ced8a81722665594ce9359fa0fa,",
+      "S:2b268476922a9ced8a81722665594ce9359fa0fa",
     "Non-variable/Utility styles/helper-text-01":
-      "S:47c20266f412d679399348ae79afb249e6f9f101,",
+      "S:47c20266f412d679399348ae79afb249e6f9f101",
     "Non-variable/Utility styles/helper-text-02":
-      "S:6cb3b49ac42a9a7b6f6e3b3a2cacacf5f688d5a7,",
+      "S:6cb3b49ac42a9a7b6f6e3b3a2cacacf5f688d5a7",
     "Non-variable/Utility styles/code-01":
-      "S:2e3e233cde78ead9b1a852d864c0b15d20efe157,",
+      "S:2e3e233cde78ead9b1a852d864c0b15d20efe157",
     "Non-variable/Utility styles/code-02":
-      "S:9b40a3f66b55a61b250db186c692cb7f1d5649f2,",
+      "S:9b40a3f66b55a61b250db186c692cb7f1d5649f2",
     "Non-variable/Utility styles/legal-01":
-      "S:fc0a02bf674dd6537af7a4f2aee7d34f72397aae,",
+      "S:fc0a02bf674dd6537af7a4f2aee7d34f72397aae",
     "Non-variable/Utility styles/legal-02":
-      "S:dc7776ab9b3438224ec984bd765c0c52dd51d2a8,",
+      "S:dc7776ab9b3438224ec984bd765c0c52dd51d2a8",
     "Non-variable/Fixed heading styles/heading-compact-01":
-      "S:59d74be255b1d0f1924b3a7f25d7a4ecfe00c9ec,",
+      "S:59d74be255b1d0f1924b3a7f25d7a4ecfe00c9ec",
     "Non-variable/Fixed heading styles/heading-compact-02":
-      "S:6d0348e4dccf760dd200feb720a59a3af225141e,",
+      "S:6d0348e4dccf760dd200feb720a59a3af225141e",
     "Non-variable/Fixed heading styles/heading-01":
-      "S:c97bbd8bb10990ae209017477ea8556495e9e2c1,",
+      "S:c97bbd8bb10990ae209017477ea8556495e9e2c1",
     "Non-variable/Fixed heading styles/heading-02":
-      "S:e18f3550bd627c0429bc5eb9c4b375415ad49625,",
+      "S:e18f3550bd627c0429bc5eb9c4b375415ad49625",
     "Non-variable/Fixed heading styles/heading-03":
-      "S:095bdd6ada3115411ec8cafcc7a5d3346130aacd,",
+      "S:095bdd6ada3115411ec8cafcc7a5d3346130aacd",
     "Non-variable/Fixed heading styles/heading-04":
-      "S:99dee1b60952c7bd19619e1f81710f91ff5c717b,",
+      "S:99dee1b60952c7bd19619e1f81710f91ff5c717b",
     "Non-variable/Fixed heading styles/heading-05":
-      "S:2a44771787fb409c1da38cc57add32412c6cc3ba,",
+      "S:2a44771787fb409c1da38cc57add32412c6cc3ba",
     "Non-variable/Fixed heading styles/heading-06":
-      "S:82bbabaf5196c90fee2348f0fcdab42fd002ab4d,",
+      "S:82bbabaf5196c90fee2348f0fcdab42fd002ab4d",
     "Non-variable/Fixed heading styles/heading-07":
-      "S:ecabfde8a38d45bcc1b901f7a432e71c06ce9349,",
+      "S:ecabfde8a38d45bcc1b901f7a432e71c06ce9349",
     "Non-variable/SM/fluid-heading-03":
-      "S:b95fd4fbd14d9c2fc46515761b8cda90adc1bbf4,",
+      "S:b95fd4fbd14d9c2fc46515761b8cda90adc1bbf4",
     "Non-variable/SM/fluid-heading-04":
-      "S:e40a304de158e982cd1bc45fec9021b796abd7ec,",
+      "S:e40a304de158e982cd1bc45fec9021b796abd7ec",
     "Non-variable/SM/fluid-heading-05":
-      "S:53f8b4a86d6c1277ccac0afa1f66bea1bf80a531,",
+      "S:53f8b4a86d6c1277ccac0afa1f66bea1bf80a531",
     "Non-variable/SM/fluid-heading-06":
-      "S:7ca7f74d49ea3b696dc4f2d58b9394ab6ca4ec11,",
+      "S:7ca7f74d49ea3b696dc4f2d58b9394ab6ca4ec11",
     "Non-variable/SM/fluid-paragraph-01":
-      "S:80b196ce0704b6363962fe8994624e850fec2775,",
+      "S:80b196ce0704b6363962fe8994624e850fec2775",
     "Non-variable/SM/fluid-quotation-01":
-      "S:e728e29a1edc0fda4859b176ceb9267c07856318,",
+      "S:e728e29a1edc0fda4859b176ceb9267c07856318",
     "Non-variable/SM/fluid-quotation-02":
-      "S:4fbfaf9753ae00b9c30ae4a3609bd260102eeedd,",
+      "S:4fbfaf9753ae00b9c30ae4a3609bd260102eeedd",
     "Non-variable/SM/fluid-display-01":
-      "S:4bcdc2b109481bad712e7ad5f9804507eaafc4dd,",
+      "S:4bcdc2b109481bad712e7ad5f9804507eaafc4dd",
     "Non-variable/SM/fluid-display-02":
-      "S:e1563827763c5e204e7f312259374ebee52929a5,",
+      "S:e1563827763c5e204e7f312259374ebee52929a5",
     "Non-variable/SM/fluid-display-03":
-      "S:ee4c3b896b94442feb932afb6055c4ea941cc4b9,",
+      "S:ee4c3b896b94442feb932afb6055c4ea941cc4b9",
     "Non-variable/SM/fluid-display-04":
-      "S:0f41a2f33006b31efc7743e753800ae6ab81f647,",
+      "S:0f41a2f33006b31efc7743e753800ae6ab81f647",
     "Non-variable/MED/fluid-heading-03":
-      "S:7e2a57fdac45bc1f6ea42249cdbadf24f687a9de,",
+      "S:7e2a57fdac45bc1f6ea42249cdbadf24f687a9de",
     "Non-variable/MED/fluid-heading-04":
-      "S:e94f0ea00f019fa08d93d3ae60365b333dd5e175,",
+      "S:e94f0ea00f019fa08d93d3ae60365b333dd5e175",
     "Non-variable/MED/fluid-heading-05":
-      "S:879f5fdd69f66966329fb47b4a5a86fa587c4ee5,",
+      "S:879f5fdd69f66966329fb47b4a5a86fa587c4ee5",
     "Non-variable/MED/fluid-heading-06":
-      "S:dd420ae864238863d987cad12a62c9d81455213b,",
+      "S:dd420ae864238863d987cad12a62c9d81455213b",
     "Non-variable/MED/fluid-paragraph-01":
-      "S:f63ca5bea7fd32028405a5477648eb7dc33e82f2,",
+      "S:f63ca5bea7fd32028405a5477648eb7dc33e82f2",
     "Non-variable/MED/fluid-quotation-01":
-      "S:f30472494da8a620180eeb0d5d3605021a844f42,",
+      "S:f30472494da8a620180eeb0d5d3605021a844f42",
     "Non-variable/MED/fluid-quotation-02":
-      "S:a3b83f145bf2d442a52a0bd6af44a8196cd3fa1c,",
+      "S:a3b83f145bf2d442a52a0bd6af44a8196cd3fa1c",
     "Non-variable/MED/fluid-display-01":
-      "S:893ab2a98b8143d225c3af72c66aba0f8fd5ce72,",
+      "S:893ab2a98b8143d225c3af72c66aba0f8fd5ce72",
     "Non-variable/MED/fluid-display-02":
-      "S:0b9d6d56698179a65b46d7d61e68a23baae40ecd,",
+      "S:0b9d6d56698179a65b46d7d61e68a23baae40ecd",
     "Non-variable/MED/fluid-display-03":
-      "S:7403c193131a4ca7c75840abcd092f1f61dd2534,",
+      "S:7403c193131a4ca7c75840abcd092f1f61dd2534",
     "Non-variable/MED/fluid-display-04":
-      "S:3d43d0f132a750de27846cceb73b291e1ed97641,",
+      "S:3d43d0f132a750de27846cceb73b291e1ed97641",
     "Non-variable/LG/fluid-heading-03":
-      "S:3206752d211a82077655be74da53e11fcfd5b2d4,",
+      "S:3206752d211a82077655be74da53e11fcfd5b2d4",
     "Non-variable/LG/fluid-heading-04":
-      "S:5fd2e1428ad2d380aeb1158fedc84b9ef8de4c5d,",
+      "S:5fd2e1428ad2d380aeb1158fedc84b9ef8de4c5d",
     "Non-variable/LG/fluid-heading-05":
-      "S:b3619d10ad814cd8ac795019ed05de21f82c148e,",
+      "S:b3619d10ad814cd8ac795019ed05de21f82c148e",
     "Non-variable/LG/fluid-heading-06":
-      "S:071582ae88f643140b5b244aac1a0362387f44f1,",
+      "S:071582ae88f643140b5b244aac1a0362387f44f1",
     "Non-variable/LG/fluid-paragraph-01":
-      "S:9916c1f2ab1715aacba411f95fe944fe041e5afb,",
+      "S:9916c1f2ab1715aacba411f95fe944fe041e5afb",
     "Non-variable/LG/fluid-quotation-01":
-      "S:82588b4672e914782474c8094c411a2fd24eb443,",
+      "S:82588b4672e914782474c8094c411a2fd24eb443",
     "Non-variable/LG/fluid-quotation-02":
-      "S:f4271e232f8ac047511d3ae077c43a07f0b3419b,",
+      "S:f4271e232f8ac047511d3ae077c43a07f0b3419b",
     "Non-variable/LG/fluid-display-01":
-      "S:c827bbb9c541e60c616f010496a61da957517fa5,",
+      "S:c827bbb9c541e60c616f010496a61da957517fa5",
     "Non-variable/LG/fluid-display-02":
-      "S:7ba045087ec330d0077cea1e7e9af3b5d994f0ba,",
+      "S:7ba045087ec330d0077cea1e7e9af3b5d994f0ba",
     "Non-variable/LG/fluid-display-03":
-      "S:0885e66ab2627850fe3e09fb2550dd6f91bec71d,",
+      "S:0885e66ab2627850fe3e09fb2550dd6f91bec71d",
     "Non-variable/LG/fluid-display-04":
-      "S:567e3bd83e07cb99c3db11dc57d0c6b43fedb376,",
+      "S:567e3bd83e07cb99c3db11dc57d0c6b43fedb376",
     "Non-variable/XLG/fluid-heading-03":
-      "S:d009320eb4c8e8c3e82ca25724f0c05c816ed9f7,",
+      "S:d009320eb4c8e8c3e82ca25724f0c05c816ed9f7",
     "Non-variable/XLG/fluid-heading-04":
-      "S:a4578e3d2fff39b3acf94c929cf8dd4a87c498bc,",
+      "S:a4578e3d2fff39b3acf94c929cf8dd4a87c498bc",
     "Non-variable/XLG/fluid-heading-05":
-      "S:047184c088728c4acc7add5c7d75148d2073b2a3,",
+      "S:047184c088728c4acc7add5c7d75148d2073b2a3",
     "Non-variable/XLG/fluid-heading-06":
-      "S:5fcb56f6340d8cb3a0b110c258947a138fa90ca9,",
+      "S:5fcb56f6340d8cb3a0b110c258947a138fa90ca9",
     "Non-variable/XLG/fluid-paragraph-01":
-      "S:d0725e82f461d5507651eae4adfdfd8a53f74145,",
+      "S:d0725e82f461d5507651eae4adfdfd8a53f74145",
     "Non-variable/XLG/fluid-quotation-01":
-      "S:09813e2a348115e85c2f8fa4a363e41e5aa881b8,",
+      "S:09813e2a348115e85c2f8fa4a363e41e5aa881b8",
     "Non-variable/XLG/fluid-quotation-02":
-      "S:63732e447fda7eb5fc447a22eaf56eb52d023a00,",
+      "S:63732e447fda7eb5fc447a22eaf56eb52d023a00",
     "Non-variable/XLG/fluid-display-01":
-      "S:2507cb2e0e4ea2444fca2a0212f34feb6892d6ae,",
+      "S:2507cb2e0e4ea2444fca2a0212f34feb6892d6ae",
     "Non-variable/XLG/fluid-display-02":
-      "S:a8b3c0992a15af444029f12a9f7f641aaf3b8bac,",
+      "S:a8b3c0992a15af444029f12a9f7f641aaf3b8bac",
     "Non-variable/XLG/fluid-display-03":
-      "S:a599bfa2ade5bb4a30d262276d0695e5699dcf27,",
+      "S:a599bfa2ade5bb4a30d262276d0695e5699dcf27",
     "Non-variable/XLG/fluid-display-04":
-      "S:4621ec543efe94ab79ed6f97c5b80b9841141419,",
+      "S:4621ec543efe94ab79ed6f97c5b80b9841141419",
     "Non-variable/MAX/fluid-heading-03":
-      "S:dfe7fdc8f470703d2110b4cf50381bc91d08bd77,",
+      "S:dfe7fdc8f470703d2110b4cf50381bc91d08bd77",
     "Non-variable/MAX/fluid-heading-04":
-      "S:d9a4ea61e52a260f3af047a9bad62bba7b23ada1,",
+      "S:d9a4ea61e52a260f3af047a9bad62bba7b23ada1",
     "Non-variable/MAX/fluid-heading-05":
-      "S:b8e6ae6feba7f78b66bc676cf2ad88dd34aef25a,",
+      "S:b8e6ae6feba7f78b66bc676cf2ad88dd34aef25a",
     "Non-variable/MAX/fluid-heading-06":
-      "S:32820c306f83f6c4c93c073c433401377245fd3e,",
+      "S:32820c306f83f6c4c93c073c433401377245fd3e",
     "Non-variable/MAX/fluid-paragraph-01":
-      "S:50666aaf5a7e56bf5b14282e85bdd56ee7429ed0,",
+      "S:50666aaf5a7e56bf5b14282e85bdd56ee7429ed0",
     "Non-variable/MAX/fluid-quotation-01":
-      "S:1801be59eda3ca7b47ae21aa54b9697a2949fb5d,",
+      "S:1801be59eda3ca7b47ae21aa54b9697a2949fb5d",
     "Non-variable/MAX/fluid-quotation-02":
-      "S:4c1c7ee44a7fad3722d33e54002c76a52d2c81f1,",
+      "S:4c1c7ee44a7fad3722d33e54002c76a52d2c81f1",
     "Non-variable/MAX/fluid-display-01":
-      "S:3c02c77ce3a4d0f103c4fe4c4dcfce7fca6dcd77,",
+      "S:3c02c77ce3a4d0f103c4fe4c4dcfce7fca6dcd77",
     "Non-variable/MAX/fluid-display-02":
-      "S:e4bd91e7a6001d09bf8beb301901e7a9725cce4e,",
+      "S:e4bd91e7a6001d09bf8beb301901e7a9725cce4e",
     "Non-variable/MAX/fluid-display-03":
-      "S:ae6e023463459d5c48a084e61e3ff9bf1795d51a,",
+      "S:ae6e023463459d5c48a084e61e3ff9bf1795d51a",
     "Non-variable/MAX/fluid-display-04":
-      "S:d2f3df0bb887748d99ae65bcc3229ede1ba07447,",
+      "S:d2f3df0bb887748d99ae65bcc3229ede1ba07447",
     "Non-variable/Link/body-compact-01":
-      "S:2de64d1d47dda68e6512381a2b55925889097d64,",
+      "S:2de64d1d47dda68e6512381a2b55925889097d64",
     "Non-variable/Link/body-compact-02":
-      "S:9859893fb16c5828a8307d10557f630ae1347a6b,",
-    "Non-variable/Link/body-01": "S:14c454d1e12e8321c740d38ad3426f72ea493c4d,",
-    "Non-variable/Link/body-02": "S:af43d0839f23c4b49d9a0a20fc1a03cef59c94d8,",
+      "S:9859893fb16c5828a8307d10557f630ae1347a6b",
+    "Non-variable/Link/body-01": "S:14c454d1e12e8321c740d38ad3426f72ea493c4d",
+    "Non-variable/Link/body-02": "S:af43d0839f23c4b49d9a0a20fc1a03cef59c94d8",
     "Non-variable/Link/helper-text-01":
-      "S:f8209873f416807c42d1fbf2c66271b09788c0b1,",
+      "S:f8209873f416807c42d1fbf2c66271b09788c0b1",
     "Variable/Default/Body styles/body 01 + 02":
-      "S:b830f8d6f6758f22876eca7912aa610567a5162d,",
+      "S:b830f8d6f6758f22876eca7912aa610567a5162d",
     "Variable/Default/Utility styles/label 01 + 02":
-      "S:a54252062ee0e2cb522550ff84f348fe43f6247b,",
+      "S:a54252062ee0e2cb522550ff84f348fe43f6247b",
     "Variable/Default/Utility styles/helper-text 01 + 02":
-      "S:2e8a63ed96b04247ae313f803e6e6d22fff3d693,",
+      "S:2e8a63ed96b04247ae313f803e6e6d22fff3d693",
     "Variable/Default/Utility styles/code 01 + 02":
-      "S:7cccc698eadde3904c9f8e7daf9f7430c7fa0b0a,",
+      "S:7cccc698eadde3904c9f8e7daf9f7430c7fa0b0a",
     "Variable/Default/Utility styles/legal 01 + 02":
-      "S:97ab5fb450d6cb44ba6c1dc85665ba8ef688dd0c,",
+      "S:97ab5fb450d6cb44ba6c1dc85665ba8ef688dd0c",
     "Variable/Default/Fixed heading styles/heading 01 + 02":
-      "S:39608f7f55b7cae2990d5f815ad74d851c7f4316,",
+      "S:39608f7f55b7cae2990d5f815ad74d851c7f4316",
     "Variable/Default/Fixed heading styles/heading-03":
-      "S:c34ebe30bceb0a5dc38e9562a056987c38e94a35,",
+      "S:c34ebe30bceb0a5dc38e9562a056987c38e94a35",
     "Variable/Default/Fixed heading styles/heading-04":
-      "S:2322794acc19391c274060f254f18b3c92eb390a,",
+      "S:2322794acc19391c274060f254f18b3c92eb390a",
     "Variable/Default/Fixed heading styles/heading-05":
-      "S:e8fc2699870b26b0eaff330fae94a4414796728c,",
+      "S:e8fc2699870b26b0eaff330fae94a4414796728c",
     "Variable/Default/Fixed heading styles/heading-06":
-      "S:a977772abda43c47459a8d689fc8553d690f6eb1,",
+      "S:a977772abda43c47459a8d689fc8553d690f6eb1",
     "Variable/Default/Fixed heading styles/heading-07":
-      "S:0403261accd9c6bb6474daeb286f52cd46ce391b,",
+      "S:0403261accd9c6bb6474daeb286f52cd46ce391b",
     "Variable/Default/Fluid styles/fluid-heading-03":
-      "S:8238c346ee6289798ba7706a1d40fc7b1dac7b20,",
+      "S:8238c346ee6289798ba7706a1d40fc7b1dac7b20",
     "Variable/Default/Fluid styles/fluid-heading-04":
-      "S:47b341e8cf1bd8c8605b32a1ccc969a59a910974,",
+      "S:47b341e8cf1bd8c8605b32a1ccc969a59a910974",
     "Variable/Default/Fluid styles/fluid-heading-05":
-      "S:10a925b059d4fd05d4838c729271632a93f5c37f,",
+      "S:10a925b059d4fd05d4838c729271632a93f5c37f",
     "Variable/Default/Fluid styles/fluid-heading-06":
-      "S:7e92b3395478d5a3c98a2d6f820a5dcadf9b2a0f,",
+      "S:7e92b3395478d5a3c98a2d6f820a5dcadf9b2a0f",
     "Variable/Default/Fluid styles/fluid-display-01":
-      "S:aca91d8bf386231e7b1e7ea94c0b2ce3d53717b9,",
+      "S:aca91d8bf386231e7b1e7ea94c0b2ce3d53717b9",
     "Variable/Default/Fluid styles/fluid-display-02":
-      "S:11115e67b7f6dac588b717a60978d97d0e15fc76,",
+      "S:11115e67b7f6dac588b717a60978d97d0e15fc76",
     "Variable/Default/Fluid styles/fluid-display-03":
-      "S:1da484e2f5f6d70c1e5de8d13636e848f1dfc354,",
+      "S:1da484e2f5f6d70c1e5de8d13636e848f1dfc354",
     "Variable/Default/Fluid styles/fluid-display-04":
-      "S:9fe75624fd8c9766416a59090027c7e44f15c3c1,",
+      "S:9fe75624fd8c9766416a59090027c7e44f15c3c1",
     "Variable/Default/Fluid styles/fluid-paragraph-01":
-      "S:9a369747e63e39b8bf43b97095fde655ceb83e56,",
+      "S:9a369747e63e39b8bf43b97095fde655ceb83e56",
     "Variable/Default/Fluid styles/fluid-quotation-01":
-      "S:dbae3e1ef5c7e0211aa388cd43a43e348f1edd2a,",
+      "S:dbae3e1ef5c7e0211aa388cd43a43e348f1edd2a",
     "Variable/Default/Fluid styles/fluid-quotation-02":
-      "S:44073c63c7c37d3fb22adfafb8641f41f0e7a7b3,",
+      "S:44073c63c7c37d3fb22adfafb8641f41f0e7a7b3",
     "Variable/Link/Body styles/body 01 + 02":
-      "S:c5e756cdcdb53397fcb3026382c08d58d5dd02dc,",
+      "S:c5e756cdcdb53397fcb3026382c08d58d5dd02dc",
     "Variable/Link/Utility styles/label 01 + 02":
-      "S:1a2a0065cc755196e40efd354c4468db708e50f2,",
+      "S:1a2a0065cc755196e40efd354c4468db708e50f2",
     "Variable/Link/Utility styles/helper-text 01 + 02":
-      "S:09cd50a797704ac4a47b252e48e22d882432d0e0,",
+      "S:09cd50a797704ac4a47b252e48e22d882432d0e0",
     "Variable/Link/Utility styles/code 01 + 02":
-      "S:9d33d59dae1912c05f7a4ee6575d6dc3bf934523,",
+      "S:9d33d59dae1912c05f7a4ee6575d6dc3bf934523",
     "Variable/Link/Utility styles/legal 01 + 02":
-      "S:4c365f674b71d6aa69d4315cbc5ea37b380462ea,",
+      "S:4c365f674b71d6aa69d4315cbc5ea37b380462ea",
     "Variable/Link/Fixed heading styles/heading 01 + 02":
-      "S:c14d903249c8ffc9e1aa8e4ef95e2e6662a94101,",
+      "S:c14d903249c8ffc9e1aa8e4ef95e2e6662a94101",
     "Variable/Link/Fixed heading styles/heading-03":
-      "S:1b34f337b0ecda75f9b044b5958a3c6b9564c965,",
+      "S:1b34f337b0ecda75f9b044b5958a3c6b9564c965",
     "Variable/Link/Fixed heading styles/heading-04":
-      "S:8b3b1db77ff4184186dce08006d0f81162ff552a,",
+      "S:8b3b1db77ff4184186dce08006d0f81162ff552a",
     "Variable/Link/Fixed heading styles/heading-05":
-      "S:848e94269c03b87f7b1f815fc3b4aaa588b805d6,",
+      "S:848e94269c03b87f7b1f815fc3b4aaa588b805d6",
     "Variable/Link/Fixed heading styles/heading-06":
-      "S:d188cf1e4fcf3842a745696e4f802b9581795a50,",
+      "S:d188cf1e4fcf3842a745696e4f802b9581795a50",
     "Variable/Link/Fixed heading styles/heading-07":
-      "S:223aa6a14e9582492f8079a0380df9573fbcb547,",
+      "S:223aa6a14e9582492f8079a0380df9573fbcb547",
     "Variable/Link/Fluid styles/fluid-heading-03":
-      "S:fd7f835da9b5c207e3a0bb24b459e41dc63c8f56,",
+      "S:fd7f835da9b5c207e3a0bb24b459e41dc63c8f56",
     "Variable/Link/Fluid styles/fluid-heading-04":
-      "S:dd1a3f6fbf4b0aff7cca3c0090f22a6c7ecd42d1,",
+      "S:dd1a3f6fbf4b0aff7cca3c0090f22a6c7ecd42d1",
     "Variable/Link/Fluid styles/fluid-heading-05":
-      "S:72c00eec85a795177d32ff9c586a0b8d53843eb6,",
+      "S:72c00eec85a795177d32ff9c586a0b8d53843eb6",
     "Variable/Link/Fluid styles/fluid-heading-06":
-      "S:f9778ddfb88df07d90782c4f5f3b5acff9cd1748,",
+      "S:f9778ddfb88df07d90782c4f5f3b5acff9cd1748",
     "Variable/Link/Fluid styles/fluid-display-01":
-      "S:bf1d71352e6921d0056ed8fee5b7bbae858919d0,",
+      "S:bf1d71352e6921d0056ed8fee5b7bbae858919d0",
     "Variable/Link/Fluid styles/fluid-display-02":
-      "S:256ff3e8973761ae7ee7307e1d3320b027362bc4,",
+      "S:256ff3e8973761ae7ee7307e1d3320b027362bc4",
     "Variable/Link/Fluid styles/fluid-display-03":
-      "S:fa0b6d0b63b3c7d9b3c5fe13e9635c38d0673339,",
+      "S:fa0b6d0b63b3c7d9b3c5fe13e9635c38d0673339",
     "Variable/Link/Fluid styles/fluid-display-04":
-      "S:72330c4a57586fff8b6c36ac463ba2e5e7346f5e,",
+      "S:72330c4a57586fff8b6c36ac463ba2e5e7346f5e",
     "Variable/Link/Fluid styles/fluid-paragraph-01":
-      "S:d8ccb87c6e764291195b9838931c61db91089678,",
+      "S:d8ccb87c6e764291195b9838931c61db91089678",
     "Variable/Link/Fluid styles/fluid-quotation-01":
-      "S:497dde64e640a149ea80334ad30c7cc50edc03e0,",
+      "S:497dde64e640a149ea80334ad30c7cc50edc03e0",
     "Variable/Link/Fluid styles/fluid-quotation-02":
-      "S:6d66b7b00229035e65f0cfdfe4b6bda0e9a3f20c,",
+      "S:6d66b7b00229035e65f0cfdfe4b6bda0e9a3f20c",
   },
   effectStyles: {},
 };

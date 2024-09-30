@@ -357,7 +357,8 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
 
           if (
             traversedNode.boundVariables &&
-            Object.keys(traversedNode.boundVariables).length === 0
+            Object.keys(traversedNode.boundVariables).length === 0 &&
+            !CARBON_TEXT_TYPEFACE_STYLE_IDS.includes(traversedNodeTextStyleId)
           ) {
             nonCarbonTextStyles++;
 
