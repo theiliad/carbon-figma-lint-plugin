@@ -142,7 +142,7 @@ const Plugin = (): JSX.Element => {
             color: "#525252",
           }}
         >
-          Version 0.3
+          Version 0.4
         </p>
 
         <h4>Carbon v11 coverage</h4>
