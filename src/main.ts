@@ -227,18 +227,6 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
             carbonComponents++;
           }
           totalLayers++;
-        } else if (traversedNode.type === "INSTANCE") {
-          nonCarbonComponents++;
-
-          nonCarbonComponentList.push({
-            ...getNodeMetadata(traversedNode),
-            code: nonCarbonErrorTypes.NotCarbonInstance,
-          });
-
-          highlightNonCarbonNode(
-            traversedNode,
-            nonCarbonErrorMessages.NotCarbonInstance
-          );
         } else if (traversedNode.type === "TEXT") {
           // check if the text is using Carbon's text styles
           let isMixedTextStyleOfCarbon = false;
@@ -386,17 +374,6 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
           ) {
             carbonComponents++;
           }
-        } else if (traversedNode.type === "LINE") {
-          nonCarbonComponents++;
-
-          nonCarbonComponentList.push({
-            ...getNodeMetadata(traversedNode),
-            code: nonCarbonErrorTypes.NotCarbonDivider,
-          });
-          highlightNonCarbonNode(
-            traversedNode,
-            nonCarbonErrorMessages.NotCarbonDivider
-          );
         } else if (traversedNode.type === "RECTANGLE") {
           let isImage = false;
 
@@ -482,15 +459,6 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
                 );
               }
             }
-          } else if (!isImage) {
-            nonCarbonComponentList.push({
-              ...getNodeMetadata(traversedNode),
-              code: nonCarbonErrorTypes.NotCarbonBox,
-            });
-            highlightNonCarbonNode(
-              traversedNode,
-              nonCarbonErrorMessages.NotCarbonBox
-            );
           }
         }
 
@@ -507,42 +475,13 @@ const calculateCoverage = (node: SceneNode): CoverageMetrics | null => {
           "accordion-header",
           "Summary Row",
         ];
+
         if (
           traversedNode.type === "FRAME" &&
           !ignoreInstanceFrameNodeNames.includes(traversedNode.name) &&
           getParentNode(traversedNode)?.type !== "PAGE"
         ) {
-          const hasStrokes =
-            traversedNode?.boundVariables?.strokes?.length ??
-            traversedNode.strokes.length;
-          const hasEffects =
-            traversedNode.effects?.length || traversedNode.effectStyleId;
-          const hasNonMixedFills =
-            traversedNode.fills !== figma.mixed && traversedNode.fills.length;
-          const hasFills =
-            traversedNode?.boundVariables?.fills?.length ??
-            hasNonMixedFills ??
-            traversedNode.fillStyleId;
-          if (
-            Boolean(hasStrokes || hasEffects || hasFills) &&
-            !Boolean(traversedNode.fills === figma.mixed) &&
-            getParentDetachedInfo(traversedNode) === null
-          ) {
-            // this is non-carbon component error
-            // push the frame layer to be included in component count
-            nonCarbonComponents++;
-
-            nonCarbonComponentList.push({
-              ...getNodeMetadata(traversedNode),
-              code: nonCarbonErrorTypes.NotCarbonComponent,
-            });
-            highlightNonCarbonNode(
-              traversedNode,
-              nonCarbonErrorMessages.NotCarbonComponent
-            );
-          } else {
-            NODES_SKIP_FROM_COVERAGE.push("FRAME");
-          }
+          NODES_SKIP_FROM_COVERAGE.push("FRAME");
         }
 
         if (

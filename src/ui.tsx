@@ -1,4 +1,5 @@
 import {
+  ActionableNotification,
   Button,
   Checkbox,
   StructuredListBody,
@@ -190,7 +191,23 @@ const Plugin = (): JSX.Element => {
       </div>
       {coverageMetrics && (
         <div>
-          <div style={{ paddingTop: "15px" }} />
+          <div
+            style={{
+              padding: "0 15px",
+            }}
+          >
+            <ActionableNotification
+              title="Check for v11 libraries"
+              subtitle="If a component or style is from a deprecated v11 Figma library, it may show up in this list."
+              inline
+              hideCloseButton
+              kind="warning"
+              lowContrast
+              style={{ maxWidth: "unset" }}
+            />
+          </div>
+
+          <div style={{ paddingTop: "30px" }} />
 
           <Tabs
             onChange={({ selectedIndex }) => {
